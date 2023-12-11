@@ -70,7 +70,7 @@ public class RegisterScene implements IErrorMessage{
 	
 	private void initializeConfirmPassword() {
 		HBox confPassDiv = new HBox();
-		confPassLabel = new Label("Password");
+		confPassLabel = new Label("Confirm Password");
 		confPassInput = new TextField();
 		confPassDiv.getChildren().addAll(confPassLabel, confPassInput);
 		container.getChildren().add(confPassDiv);
