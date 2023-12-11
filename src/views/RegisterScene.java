@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import controllers.UserController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
@@ -34,7 +35,7 @@ public class RegisterScene implements IErrorMessage{
 	TextField confPassInput;
 	Spinner<Integer> ageInput;
 	Button registerButton;
-	Button loginButton;
+	Hyperlink loginLink;
 	Label errorLabel;
 	
 	private RegisterScene() {
@@ -93,7 +94,9 @@ public class RegisterScene implements IErrorMessage{
 			Integer age = ageInput.getValue();
 			UserController controller = new UserController();
 			try {
-				controller.addNewUser(this, username, password, confpass, age);
+				if(!controller.addNewUser(this, username, password, confpass, age)) return;
+				
+				DisplayAllPCScene.setScene(primaryStage);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -102,11 +105,11 @@ public class RegisterScene implements IErrorMessage{
 	}
 	
 	private void initializeLogin() {
-		loginButton = new Button("Login");
-		loginButton.setOnAction(event ->{
+		loginLink = new Hyperlink("Already have an account? login");
+		loginLink.setOnAction(event ->{
 			LoginScene.setScene(primaryStage);
 		});
-		container.getChildren().add(loginButton);
+		container.getChildren().add(loginLink);
 	}
 	
 	private void _setScene(Stage primaryStage) {

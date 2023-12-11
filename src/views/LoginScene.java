@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import controllers.UserController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -29,6 +30,7 @@ public class LoginScene implements IErrorMessage{
 	TextField usernameInput;
 	TextField passwordInput;
 	Button loginButton;
+	Hyperlink registerLink;
 	Label errorLabel;
 	
 	private LoginScene() {
@@ -38,6 +40,7 @@ public class LoginScene implements IErrorMessage{
 		errorLabel = new Label();
 		container.getChildren().add(errorLabel);
 		initializeLogin();
+		initializeRegisterLink();
 		
 		scene = new Scene(container);
 		scene.setRoot(container);
@@ -66,12 +69,22 @@ public class LoginScene implements IErrorMessage{
 			String password = passwordInput.getText();
 			UserController controller = new UserController();
 			try {
-				controller.loginUser(this, username, password);;
+				if(!controller.loginUser(this, username, password)) return;
+				
+				DisplayAllPCScene.setScene(primaryStage);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		});
 		container.getChildren().add(loginButton);
+	}
+	
+	private void initializeRegisterLink() {
+		registerLink = new Hyperlink("Don't have an account? Register");
+		registerLink.setOnAction(event ->{
+			RegisterScene.setScene(primaryStage);
+		});
+		container.getChildren().add(registerLink);
 	}
 	
 	private void _setScene(Stage primaryStage) {
