@@ -3,6 +3,7 @@ package views;
 import java.util.ArrayList;
 
 import controllers.PCController;
+import controllers.UserController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,13 +31,15 @@ public class DisplayAllPCScene  implements IErrorMessage{
 	// Table
 	TableView<PC> tableView;
 	Button addButton;
+	VBox container;
 	
 	private DisplayAllPCScene() {
 		initializeTable();
-		initializeAddButton();
 		// Add item to container
-		VBox container = new VBox();
-		container.getChildren().addAll(tableView, addButton);
+		container = new VBox();
+		container.getChildren().add(tableView);
+		System.out.println(UserController.getAuthorization());
+		if(UserController.getAuthorization().equals("Admin")) initializeAddButton();
 		
 		scene = new Scene(container);
 		
@@ -91,6 +94,7 @@ public class DisplayAllPCScene  implements IErrorMessage{
 		addButton.setOnAction(event -> {
 			AddPCScene.setScene(primaryStage);
 		});
+		container.getChildren().add(addButton);
 	}
 	
 	private void _setScene(Stage primaryStage) {

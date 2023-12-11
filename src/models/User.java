@@ -18,6 +18,10 @@ public class User {
 		System.out.println(this.userName + " " + this.userPassword + " " + this.userAge);
 	}
 	
+	public String getRole() {
+		return userRole;
+	}
+	
 	public getUserData(String username, String password) {
 		
 	}
@@ -56,9 +60,11 @@ public class User {
 		ps.setString(2, password);
 		ResultSet rs = ps.executeQuery();
 		if(rs.next()) {
+			this.userID = rs.getInt("userID");
 			this.userName = rs.getString("username");
 			this.userPassword = rs.getString("password");
 			this.userAge = rs.getInt("age");
+			this.userRole = rs.getString("role");
 			return this;
 		}else return null;
 	}

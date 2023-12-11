@@ -7,8 +7,14 @@ import views.IErrorMessage;
 
 public class UserController {
 	
+	public static User currentUser;
+	
 	public void getUserData(String username, String password) {
 		
+	}
+	
+	public static String getAuthorization() {
+		return currentUser.getRole();
 	}
 	
 	public boolean addNewUser(IErrorMessage error, String username, String password, String confpass, int age) throws SQLException{
@@ -89,6 +95,7 @@ public class UserController {
 			return false;
 		}else {
 			user.getAllUserData();
+			currentUser = user;
 			return true;
 		}
 	}
