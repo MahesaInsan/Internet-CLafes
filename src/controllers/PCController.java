@@ -16,12 +16,30 @@ public class PCController {
 			return null;
 		}
 	}
-	public void updatePCCondition(String pcID, String condition) {
+	
+	public boolean updatePCCondition(IErrorMessage error, String pcID, String condition) throws SQLException {
+		if(condition == null) {
+			error.displayErrorMessage("Condition must be selected");
+			return false;
+		}
+		PC.updatePCCondition(pcID, condition);
+		return true;
+	}
+	
+	public boolean deletePC(String pcID) {
+		//check if pc is used
+		
+		try {
+			PC.deletePC(pcID);
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 		
 	}
-	public void deletePC(String pcID) {
-		
-	}
+	
 	public boolean addNewPC(IErrorMessage error, String pcID) throws SQLException {
 		if(pcID.equals("")) {
 			error.displayErrorMessage("All fields must be filled");
@@ -35,6 +53,7 @@ public class PCController {
 		PC.addNewPC(pcID);
 		return true;
 	}
+	
 	public void getPCDetail(String pcID) {
 		
 	}

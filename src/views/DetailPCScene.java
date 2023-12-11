@@ -1,26 +1,22 @@
 package views;
 
-import java.sql.SQLException;
-
 import controllers.PCController;
-import javafx.collections.FXCollections;
+import controllers.UserController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.PC;
 
-public class DetailPCScene {
-	public static void setScene(Stage primaryStage) {
-		DetailPCScene detailPC = new DetailPCScene();
+public class DetailPCScene implements IErrorMessage{
+	public static void setScene(Stage primaryStage, PC pc) {
+		DetailPCScene detailPC = new DetailPCScene(pc);
 		detailPC._setScene(primaryStage);
 	}
 	
-	public static void setScene(Stage primaryStage, PC pc) {
+	public static void setScene(Stage primaryStage) {
 		setScene(primaryStage);
 	}
 	
@@ -31,12 +27,12 @@ public class DetailPCScene {
 	
 	Label pcIDLabel;
 	Label pcConditionLabel;
-	TextField pcIDInput;
-	ComboBox<String> pcConditionInput;
 	Label errorMsg;
-	Button addButton;
+	Button editButton;
+	Button deleteButton;
 	
-	private DetailPCScene() {
+	private DetailPCScene(PC pc) {
+		this.pc = pc;
 		container = new VBox();
 		initializePCID();
 		initializePCCondition();
@@ -44,8 +40,7 @@ public class DetailPCScene {
 		errorMsg = new Label();
 		container.getChildren().add(errorMsg);
 		
-		initializeAddButton();
-		container.getChildren().add(addButton);
+		if(UserController.getAuthorization().equals("Admin")) initializeButton();
 		
 		scene = new Scene(container);
 		scene.setRoot(container);
@@ -55,43 +50,34 @@ public class DetailPCScene {
 	private void initializePCID() {
 		HBox pcIDDiv = new HBox();
 		
-		pcIDLabel = new Label("PC ID");
-		pcIDInput = new TextField();
-		pcIDDiv.getChildren().addAll(pcIDLabel, pcIDInput);
+		pcIDLabel = new Label("PC ID: " + pc.getPcID());
+		pcIDDiv.getChildren().addAll(pcIDLabel);
 		container.getChildren().add(pcIDDiv);
 	}
 	
 	private void initializePCCondition() {
-		String conditions [] = {
-				"Usable",
-				"Maintenance",
-				"Broken"
-		};
-		
 		HBox pcConditionDiv = new HBox();
 		
-		Label pcConditionLabel = new Label("PC Condition");
-		pcConditionInput = new ComboBox<String>(FXCollections.observableArrayList(conditions));
-		pcConditionDiv.getChildren().addAll(pcConditionLabel, pcConditionInput);
+		Label pcConditionLabel = new Label("PC Condition: " + pc.getPcCondition());
+		pcConditionDiv.getChildren().add(pcConditionLabel);
 		container.getChildren().add(pcConditionDiv);
 	}
 	
-	private void initializeAddButton() {
-		addButton = new Button("Save PC");
-		addButton.setOnAction(event -> {
-			String id = pcIDInput.getText();
-			String condition = pcConditionInput.getValue();
+	private void initializeButton() {
+		editButton = new Button("Edit");
+		editButton.setOnAction(event -> {
+			EditPCScene.setScene(primaryStage, pc);
+		});
+		
+		deleteButton = new Button("Delete");
+		deleteButton.setOnAction(event -> {
 			PCController controller = new PCController();
-			
-			try {
-				if(!controller.addNewPC(this, id)) return;
-				System.out.println(id);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			controller.deletePC(pc.getPcID());
+			this.pc = null;
 			
 			DisplayAllPCScene.setScene(primaryStage);
 		});
+		container.getChildren().addAll(editButton, deleteButton);
 	}
 	
 	private void _setScene(Stage primaryStage) {

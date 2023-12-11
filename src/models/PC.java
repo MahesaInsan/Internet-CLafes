@@ -22,12 +22,19 @@ public class PC {
 		return pcCondition;
 	}
 
-	public void updatePCCondition(String pcID, String pcCondition) {
-		
+	public static void updatePCCondition(String pcID, String pcCondition) throws SQLException {
+		Connect db = Connect.getConnection();
+		PreparedStatement ps = db.prepareStatement("UPDATE pc SET pcCondition = ? WHERE pcID = ?");
+		ps.setString(1, pcCondition);
+		ps.setString(2, pcID);
+		ps.executeUpdate();
 	}
 	
-	public void deletePC(String pcID) {
-		
+	public static void deletePC(String pcID) throws SQLException {
+		Connect db = Connect.getConnection();
+		PreparedStatement ps = db.prepareStatement("DELETE FROM pc WHERE pcID = ?");
+		ps.setString(1, pcID);
+		ps.executeUpdate();
 	}
 	
 	public static void addNewPC(String pcID) throws SQLException {

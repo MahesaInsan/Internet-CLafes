@@ -38,7 +38,6 @@ public class DisplayAllPCScene  implements IErrorMessage{
 		// Add item to container
 		container = new VBox();
 		container.getChildren().add(tableView);
-		System.out.println(UserController.getAuthorization());
 		if(UserController.getAuthorization().equals("Admin")) initializeAddButton();
 		
 		scene = new Scene(container);
@@ -59,8 +58,6 @@ public class DisplayAllPCScene  implements IErrorMessage{
 				new PropertyValueFactory<>("pcCondition")
 				);
 		
-		
-		DisplayAllPCScene temp = this;
 		TableColumn<PC, Void> actionColumn = new TableColumn<>("Action");
 	    actionColumn.setCellFactory(param -> new TableCell<>() {
 	        private final Button detailButton = new Button("Detail");

@@ -28,10 +28,11 @@ public class User {
 	
 	public void addNewUser(String username, String password, int age) throws SQLException {
 		Connect db = Connect.getConnection();
-		PreparedStatement ps = db.prepareStatement("INSERT INTO `users` (username, password, age) VALUES (?, ?, ?)");
+		PreparedStatement ps = db.prepareStatement("INSERT INTO `users` (username, password, age, role) VALUES (?, ?, ?, ?)");
 		ps.setString(1, username);
 		ps.setString(2, password);
 		ps.setInt(3, age);
+		ps.setString(4, "Customer");
 		ps.executeUpdate();
 	}
 	
@@ -60,11 +61,11 @@ public class User {
 		ps.setString(2, password);
 		ResultSet rs = ps.executeQuery();
 		if(rs.next()) {
-			this.userID = rs.getInt("userID");
-			this.userName = rs.getString("username");
-			this.userPassword = rs.getString("password");
-			this.userAge = rs.getInt("age");
-			this.userRole = rs.getString("role");
+			this.userID = rs.getInt(1);
+			this.userName = rs.getString(2);
+			this.userPassword = rs.getString(3);
+			this.userAge = rs.getInt(4);
+			this.userRole = rs.getString(5);
 			return this;
 		}else return null;
 	}

@@ -14,6 +14,7 @@ public class UserController {
 	}
 	
 	public static String getAuthorization() {
+		System.out.println(currentUser.getRole());
 		return currentUser.getRole();
 	}
 	
