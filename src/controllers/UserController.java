@@ -37,12 +37,12 @@ public class UserController {
 			return;
 		}
 		
-		if(confpass != password) {
+		if(!confpass.equals(password)) {
 			error.displayErrorMessage("Confirm password and password must be the same");
 			return;
 		}
 				
-		if(age >= 13 && age <= 65) {
+		if(age <= 13 || age >= 65) {
 			error.displayErrorMessage("You must be older than 13 and younger than 65");
 			return;
 		}
