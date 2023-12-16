@@ -90,7 +90,24 @@ public class DetailTransactionScene {
 		}
 	}
 
-		private MenuBar initiate(User user) {
+//Inisiasi variable Navbar
+	MenuBar menuBar;
+	Menu adminMenu;
+	Menu custMenu;
+	Menu techMenu;
+	Menu operatorMenu;
+	MenuItem viewAdminPCMI;
+	MenuItem viewCustPCMI;
+	MenuItem viewReportMI;
+	MenuItem viewStaffJobMI;
+	MenuItem viewTransMI;
+	MenuItem viewStaffMI;
+	MenuItem viewTechJobMI;
+	MenuItem viewPCBookedMI;
+	MenuItem viewCustTransMI;
+	
+	//Membuat navbar dan memberikan label setiap navbar
+	private MenuBar initiate(User user) {
 		menuBar = new MenuBar();
 		
 		adminMenu = new Menu("Main Menu");
