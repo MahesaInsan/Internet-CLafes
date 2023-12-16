@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import main.Connect;
 
@@ -74,7 +75,7 @@ public class User {
 		return userRole;
 	}
 	
-	public getUserData(String username, String password) {
+	public void getUserData(String username, String password) {
 		
 	}
 	
@@ -95,9 +96,36 @@ public class User {
 		ps.setInt(2, userID);
 		ps.executeUpdate();
 	}
+	// Data" technician 
 	
-	public getAllTechnician() {
-		
+	public List<User> getAllTechnician() throws SQLException{
+	    List<User> technicians = new ArrayList<>();
+	    Connect db = Connect.getConnection();
+	    try (
+	         PreparedStatement ps = db.prepareStatement("SELECT * FROM users WHERE role = 'Technician'");
+	         ResultSet rs = ps.executeQuery()) {
+
+	        while (rs.next()) {
+	            int technicianID = rs.getInt("user_id");
+	            String technicianName = rs.getString("username");
+	            String technicianPassword = rs.getString("password");
+	            int technicianAge = rs.getInt("age");
+	            String technicianRole = rs.getString("role");
+
+	            User technician = new User();
+	            technician.setUserID(technicianID);
+	            technician.setUserName(technicianName);
+	            technician.setUserPassword(technicianPassword);
+	            technician.setUserAge(technicianAge);
+	            technician.setUserRole(technicianRole);
+
+	            technicians.add(technician);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace(); // Handle or log the exception as needed
+	    }
+
+	    return technicians;
 	}
 	
 	public static ArrayList<User> getAllUser() throws SQLException{

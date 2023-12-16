@@ -9,11 +9,14 @@ import models.User;
 import views.IErrorMessage;
 
 public class JobController {
-	public boolean addNewJob(IErrorMessage error, String userID, String pcID) throws SQLException{
-		if(userID.equals("")) {
-			error.displayErrorMessage("All fields must be filled");
-			return false;
-		}
+	private Job job;
+	
+	
+	public JobController() {
+		this.job = new Job();
+	}
+
+	public boolean addNewJob(IErrorMessage error, String userID, String pcID) {
 		
 		if(pcID.equals("")) {
 			error.displayErrorMessage("All fields must be filled");
@@ -59,6 +62,16 @@ public class JobController {
 		
 		return false;
 	}
+	
+	public void completeJobStatus(String jobID, String jobStatus) throws SQLException{
+		try {
+			job.completeJobStatus(jobID, jobStatus);
+			System.out.println("Job Status Updated Succesfully");
+		} catch (Exception e) {
+			System.out.println("Error Updating Job Status: " + e.getMessage());
+			// TODO: handle exception
+		}
+	}
 	public ArrayList<Job> getAllJobData(IErrorMessage error) {
 		try {
 			return Job.getAllJobData();
@@ -71,7 +84,19 @@ public class JobController {
 	public void getPCOnWorkingList(String pcID) {
 		
 	}
-	public void getTechnicianJob(String userID) {
+	public ArrayList<Job> getTechnicianJob(int userID) throws SQLException{
+		try {
+			ArrayList<Job> technicianJobs = job.getTechnicianJobs(userID);
+			if(technicianJobs.isEmpty()) {
+				System.out.println("No Jobs Assigned to the Technician yet");
+			}
+			return technicianJobs;
+		} catch (Exception e) {
+			System.out.println("" + e.getMessage());
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return null;
 		
 	}
 	

@@ -8,24 +8,24 @@ import java.util.ArrayList;
 import main.Connect;
 
 public class Job {
-	private String jobID;
-	private String userID;
+	private int jobID;
+	private int userID;
 	private String pcID;
 	private String jobStatus;
 
-	public String getJobID() {
+	public int getJobID() {
 		return jobID;
 	}
 
-	public void setJobID(String jobID) {
+	public void setJobID(int jobID) {
 		this.jobID = jobID;
 	}
 
-	public String getUserID() {
+	public int getUserID() {
 		return userID;
 	}
 
-	public void setUserID(String userID) {
+	public void setUserID(int userID) {
 		this.userID = userID;
 	}
 
@@ -33,7 +33,7 @@ public class Job {
 		return pcID;
 	}
 
-	public void setPcID(String pcID) {
+	public void setPcID(int pcID) {
 		this.pcID = pcID;
 	}
 
@@ -70,15 +70,27 @@ public class Job {
 		ps.setString(1, jobStatus);
 		ps.setInt(2, id);
 		ps.executeUpdate();
+	
+	public void completeJobStatus(String jobID, String jobStatus)throws SQLException {
+		try {
+			Connect db = Connect.getConnection();
+			String query = "UPDATE job SET job_status = ? WHERE job_id = ?";
+			try(PreparedStatement ps = db.prepareStatement(query)){
+				ps.setString(1, jobStatus);
+				ps.setString(2, jobID);
+				
+				ps.executeUpdate();
+			}
+		} catch (Exception e) {
+			throw e;
+			// TODO: handle exception
+		}
 	}
 	
 	public void getPCOnWorkingList(String pcID) {
 		
 	}
 	
-	public void getTechnicianJob(String userID) {
-		
-	}
 	
 	public static ArrayList<Job> getAllJobData() throws SQLException{
 		ArrayList<Job> jobList = new ArrayList<Job>();
@@ -95,4 +107,29 @@ public class Job {
 		return jobList;
 		
 	}
+	public ArrayList<Job> getTechnicianJobs(int userID) throws SQLException {
+        ArrayList<Job> technicianJobs = new ArrayList<>();
+        try {
+            Connect db = Connect.getConnection();
+            String query = "SELECT * FROM job WHERE userID = ?";
+            try (PreparedStatement ps = db.prepareStatement(query)) {
+                ps.setInt(1, userID);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Job job = new Job();
+                        job.setJobID(rs.getInt("jobID"));
+                        job.setUserID(rs.getInt("userID"));
+                        job.setPcID(rs.getInt("pcID"));
+                        job.setJobStatus(rs.getString("jobStatus"));
+
+                        technicianJobs.add(job);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return technicianJobs;
+    }
 }
