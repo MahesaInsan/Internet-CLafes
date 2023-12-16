@@ -1,105 +1,51 @@
 package controllers;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import main.Connect;
 import models.Job;
-import models.PC;
-import models.User;
-import views.IErrorMessage;
 
 public class JobController {
-	public boolean addNewJob(IErrorMessage error, String userID, String pcID) throws SQLException{
-		if(userID.equals("")) {
-			error.displayErrorMessage("All fields must be filled");
-			return false;
-		}
-		
-		if(pcID.equals("")) {
-			error.displayErrorMessage("All fields must be filled");
-			return false;
-		}
-		
-		if(checkStaff(userID)) {
-			error.displayErrorMessage("Staff didn't exist!");
-			return false;
-		}
-		
-		if(checkUserRole(userID)) {
-			error.displayErrorMessage("Staff role is not Computer Technician!");
-			return false;
-		}
-		
-		if(checkPCID(pcID)) {
-			error.displayErrorMessage("PC ID is not exist!");
-			return false;
-		}
-		
-		if(checkPCStatus(pcID)) {
-			error.displayErrorMessage("There is already technician doing this job!");
-			return false;
-		}
-		
-		Job.addNewJob(userID, pcID);
-		PC.updatePCCondition(pcID, "Maintenance");
-		return true;
+	private Job job;
+	
+	
+	public JobController() {
+		this.job = new Job();
 	}
-	public boolean updateJobStatus(String jobID, String jobStatus, String pcID) throws SQLException{
-		if(jobStatus.equals("Complete")) {
-			Job.updateJobStatus(jobID, jobStatus);
-			PC.updatePCCondition(pcID, "Usable");
-			return true;
-		}
+
+	public void addNewJob(String userID, String pcID) {
 		
-		if(jobStatus.equals("UnComplete")) {
-			Job.updateJobStatus(jobID, jobStatus);
-			PC.updatePCCondition(pcID, "Maintenance");
-			return true;
-		}
-		
-		return false;
 	}
-	public ArrayList<Job> getAllJobData(IErrorMessage error) {
+	public void updateJobStatus(String jobID, String jobStatus) throws SQLException{
 		try {
-			return Job.getAllJobData();
+			job.updateJobStatus(jobID, jobStatus);
+			System.out.println("Job Status Updated Succesfully");
 		} catch (Exception e) {
-			error.displayErrorMessage("Error fetching job data");
-			e.printStackTrace();
-			return null;
+			System.out.println("Error Updating Job Status: " + e.getMessage());
+			// TODO: handle exception
 		}
+	}
+	public void getAllJobData() {
+		
 	}
 	public void getPCOnWorkingList(String pcID) {
 		
 	}
-	public void getTechnicianJob(String userID) {
+	public ArrayList<Job> getTechnicianJob(int userID) throws SQLException{
+		try {
+			ArrayList<Job> technicianJobs = job.getTechnicianJobs(userID);
+			if(technicianJobs.isEmpty()) {
+				System.out.println("No Jobs Assigned to the Technician yet");
+			}
+			return technicianJobs;
+		} catch (Exception e) {
+			System.out.println("" + e.getMessage());
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return null;
 		
-	}
-	
-	private boolean checkPCID(String pcID) throws SQLException {
-		if(PC.getPCDetail(pcID) == null) {
-			return true;
-		}else return false;
-	}
-	
-	private boolean checkUserRole(String userID) throws SQLException{
-		User staff = User.checkStaffRole(userID);
-		String Role = staff.getRole();
-		if(Role.equals("Computer Technician")) {
-			return false;
-		}else return true;
-	}
-	
-	private boolean checkStaff(String userID) throws SQLException{
-		User staff = User.checkStaffRole(userID);
-		if(staff == null) {
-			return true;
-		}else return false;
-	}
-	
-	private boolean checkPCStatus(String pcID) throws SQLException{
-		PC pc = PC.getPCDetail(pcID);
-		if(pc.getPcCondition().equals("Maintenance")) {
-			return true;
-		}else return false;
 	}
 }
