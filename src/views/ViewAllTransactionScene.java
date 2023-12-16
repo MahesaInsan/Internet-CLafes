@@ -3,9 +3,13 @@ package views;
 import java.util.ArrayList;
 
 import controllers.TransactionController;
+import controllers.UserController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -14,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.TransactionHeader;
+import models.User;
 
 public class ViewAllTransactionScene{
 	private static ViewAllTransactionScene instance;
@@ -129,7 +134,7 @@ public class ViewAllTransactionScene{
 	MenuItem viewCustTransMI;
 	
 	//Membuat navbar dan memberikan label setiap navbar
-	private MenuBar initiate(User user) {
+	private MenuBar navbar(User user) {
 		menuBar = new MenuBar();
 		
 		adminMenu = new Menu("Main Menu");
