@@ -21,7 +21,7 @@ public final class Connect {
 	
 	private final String USERNAME = "root"; // change with your MySQL username, the default username is 'root'
 	private final String PASSWORD = ""; // change with your MySQL password, the default password is empty
-	private final String DATABASE = "projectLab"; // change with the database name that you use
+	private final String DATABASE = "projectlab"; // change with the database name that you use
 	private final String HOST = "localhost:3306"; // change with your MySQL host, the default port is 3306
 	private final String CONECTION = String.format("jdbc:mysql://%s/%s", HOST, DATABASE);
 	
@@ -99,4 +99,7 @@ public final class Connect {
 		}
     	return ps;
     }
+    
+    
+    
 }
