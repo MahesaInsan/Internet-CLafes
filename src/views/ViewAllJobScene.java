@@ -21,15 +21,16 @@ import javafx.stage.Stage;
 import models.Job;
 
 public class ViewAllJobScene implements IErrorMessage{
+	//initialize instance
 	private static ViewAllJobScene instance;
-	
 	public static void setScene(Stage primaryStage) {
 		if(instance == null) {
 			instance = new ViewAllJobScene();
 		}
 		instance._setScene(primaryStage);
 	}
-	
+
+	//javafx component
 	Stage primaryStage;
 	VBox container;
 	HBox updateJobDiv;
@@ -40,10 +41,12 @@ public class ViewAllJobScene implements IErrorMessage{
 	Button updateButton;
 	ComboBox<String> jobDropDown;
 	Label jobDropDownLabel;
-	
+
+	//Variable untuk event listener
 	int selectedJobID = 0;
 	String selectedJobPC = "";
-	
+
+	//Constructor untuk class ini
 	private ViewAllJobScene() {
 		initializeTable();
 		initializeAddButton();
@@ -58,7 +61,8 @@ public class ViewAllJobScene implements IErrorMessage{
 		
 		scene.setRoot(container);
 	}
-	
+
+	//Inisialisasi table, dipisah kedalam method ini supaya lebih rapih
 	private void initializeTable() {
 		tableView = new TableView<Job>();
 		
@@ -88,14 +92,16 @@ public class ViewAllJobScene implements IErrorMessage{
 		tableView.getColumns().add(statusColumn);
 		tableView.setPlaceholder(new Label("No Rows to Display"));
 	}
-	
+
+	//Inisialisasi add button dimana jika di click akan redirect ke scene baru yaitu AddStaffJobScene
 	private void initializeAddButton() {
 		addButton = new Button("Add Job");
 		addButton.setOnAction(event -> {
 			AddStaffJobScene.setScene(primaryStage);
 		});
 	}
-	
+
+	//Inisialisasi drop down untuk memilih status dari job
 	private void initializeDropDown() {
 		String status[] = {
 				"Complete",
@@ -108,7 +114,8 @@ public class ViewAllJobScene implements IErrorMessage{
 		jobDropDown = new ComboBox<String>(FXCollections.observableArrayList(status));
 		updateJobDiv.getChildren().addAll(jobDropDownLabel, jobDropDown);
 	}
-	
+
+	//Inisialisasi untuk button update dimana jika di click akan menjalankan logika update
 	private void initializeUpdateButton() {
 		updateButton = new Button("Update job");
 		updateButton.setOnAction(event -> {
@@ -142,7 +149,8 @@ public class ViewAllJobScene implements IErrorMessage{
 			ViewAllJobScene.setScene(primaryStage);
 		});
 	}
-	
+
+	//Event listener untuk mengambil data dari table yang sedang di click
 	private void addEventListener() {
 		tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Job>() {
 			public void changed(ObservableValue<? extends Job> observable, Job oldValue, Job newValue) {
@@ -153,13 +161,15 @@ public class ViewAllJobScene implements IErrorMessage{
 			}
 		});
 	}
-	
+
+	//method untuk set scene
 	private void _setScene(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		primaryStage.setScene(scene);
 		_repaint();
 	}
-	
+
+	//method repaint untuk mengambil data dari database untuk ditampilkan di tableview
 	public void _repaint() {
 		tableView.getItems().clear();
 		JobController controller = new JobController();
@@ -169,6 +179,7 @@ public class ViewAllJobScene implements IErrorMessage{
 		}
 	}
 	
+	//method untuk display error message
 	@Override
 	public void displayErrorMessage(String error) {
 		// TODO Auto-generated method stub
