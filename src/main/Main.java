@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import views.DisplayAllPCScene;
 import views.RegisterScene;
+import views.ViewAllJobScene;
+import views.ViewAllStaffScene;
 import views.ViewAllTransactionScene;
 
 public class Main extends Application{
@@ -14,7 +16,7 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		ViewAllTransactionScene.setScene(primaryStage);
+		ViewAllStaffScene.setScene(primaryStage);
 		primaryStage.show();
 	}
 }

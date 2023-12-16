@@ -55,8 +55,9 @@ public class Job {
 
 	public static void addNewJob(String userID, String pcID) throws SQLException{
 		Connect db = Connect.getConnection();
-		PreparedStatement ps = db.prepareStatement("INSERT INTO job (staffId, pcId, jobStatus) VALUES (?, ?, ?)");
-		ps.setString(1, userID);
+		int id = Integer.parseInt(userID);
+		PreparedStatement ps = db.prepareStatement("INSERT INTO job (staffId, pcId, status) VALUES (?, ?, ?)");
+		ps.setInt(1, id);
 		ps.setString(2, pcID);
 		ps.setString(3, "UnComplete");
 		ps.executeUpdate();

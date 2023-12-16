@@ -24,7 +24,7 @@ public class PC {
 
 	public static void updatePCCondition(String pcID, String pcCondition) throws SQLException {
 		Connect db = Connect.getConnection();
-		PreparedStatement ps = db.prepareStatement("UPDATE pc SET pcCondition = ? WHERE pcID = ?");
+		PreparedStatement ps = db.prepareStatement("UPDATE pc SET pcCondition = ? WHERE id = ?");
 		ps.setString(1, pcCondition);
 		ps.setString(2, pcID);
 		ps.executeUpdate();
@@ -47,12 +47,12 @@ public class PC {
 	
 	public static PC getPCDetail(String pcID) throws SQLException {
 		Connect db = Connect.getConnection();
-		PreparedStatement ps = db.prepareStatement("SELECT * FROM pc WHERE pcID = ?");
+		PreparedStatement ps = db.prepareStatement("SELECT * FROM pc WHERE id = ?");
 		ps.setString(1, pcID);
 		ResultSet rs = ps.executeQuery();
 		
 		while(rs.next()) {
-			return new PC(rs.getString("pcID"), rs.getString("pcCondition"));
+			return new PC(rs.getString("id"), rs.getString("pcCondition"));
 		}
 		return null;
 	}
