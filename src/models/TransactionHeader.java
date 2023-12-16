@@ -8,32 +8,38 @@ import java.util.ArrayList;
 import main.Connect;
 
 public class TransactionHeader {
+	//attribute transaction header
 	private int transactionID;
 	private int staffID;
 	private String staffName;
 	private String transactionDate;
-	
+
+	//getter id
 	public int getTransactionID() {
 		return transactionID;
 	}
+	//getter staff id
 	public int getStaffID() {
 		return staffID;
 	}
+	//getter staff name
 	public String getStaffName() {
 		return staffName;
 	}
+	//getter transaction date
 	public String getTransactionDate() {
 		return transactionDate;
 	}
 
-
+	//constructor transaction header untuk set id, staff id, staff name dan transaction date
 	public TransactionHeader(int id, int staffId, String staffName, String transactionDate) {
 		this.transactionID = id;
 		this.staffID = staffId;
 		this.staffName = staffName;
 		this.transactionDate = transactionDate;
 	}
-	
+
+	//Mengambil semua data transaction header dari database
 	public static ArrayList<TransactionHeader> getAllTransactionHeaderData() throws SQLException {
 		ArrayList<TransactionHeader> tHeadList = new ArrayList<TransactionHeader>();
 		Connect db = Connect.getConnection();
