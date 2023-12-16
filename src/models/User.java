@@ -9,12 +9,14 @@ import java.util.List;
 import main.Connect;
 
 public class User {
+	//attribute user
 	private int userID;
 	private String userName;
 	private String userPassword;
 	private int userAge;
 	private String userRole;
-	
+
+	//Constructor untuk set id, username, password, age dan role
 	public User(int userID, String userName, String userPassword, int userAge, String userRole) {
 		super();
 		this.userID = userID;
@@ -23,62 +25,57 @@ public class User {
 		this.userAge = userAge;
 		this.userRole = userRole;
 	}
-	
+
+	//Constructor jika tidak  mau melakukan set
 	public User() {
 	};
-
+	//Getter id
 	public int getUserID() {
 		return userID;
 	}
-
+	//Setter id
 	public void setUserID(int userID) {
 		this.userID = userID;
 	}
-
+	//Getter username
 	public String getUserName() {
 		return userName;
 	}
-
+	//Setter username
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
+	//Getter password
 	public String getUserPassword() {
 		return userPassword;
 	}
-
+	//Setter password
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-
+	//Getter age
 	public int getUserAge() {
 		return userAge;
 	}
-
+	//Setter age
 	public void setUserAge(int userAge) {
 		this.userAge = userAge;
 	}
-
+	//Getter role
 	public String getUserRole() {
 		return userRole;
 	}
-
+	//Setter role
 	public void setUserRole(String userRole) {
 		this.userRole = userRole;
 	}
-	
-	public void getAllUserData() {
-		System.out.println(this.userName + " " + this.userPassword + " " + this.userAge);
-	}
-	
+
+	//Getter role
 	public String getRole() {
 		return userRole;
 	}
-	
-	public void getUserData(String username, String password) {
-		
-	}
-	
+
+	//Menambahkan data user ke dalam database
 	public void addNewUser(String username, String password, int age) throws SQLException {
 		Connect db = Connect.getConnection();
 		PreparedStatement ps = db.prepareStatement("INSERT INTO `users` (username, password, age, role) VALUES (?, ?, ?, ?)");
@@ -97,8 +94,8 @@ public class User {
 		ps.setInt(2, userID);
 		ps.executeUpdate();
 	}
-	// Data" technician 
 	
+	//Mengambil data" technician dari database 
 	public List<User> getAllTechnician() throws SQLException{
 	    List<User> technicians = new ArrayList<>();
 	    Connect db = Connect.getConnection();
@@ -144,7 +141,8 @@ public class User {
 		
 		return staffList;
 	}
-	
+
+	//Mengecek username di database
 	public boolean checkUsername(String username) throws SQLException{
 		Connect db = Connect.getConnection();
 		PreparedStatement ps = db.prepareStatement("SELECT * FROM `users` WHERE username = ?");
@@ -168,7 +166,8 @@ public class User {
 		}
 		return null;
 	}
-	
+
+	//Melakukan validasi user di dalam database
 	public User validateUser(String username, String password) throws SQLException {
 		Connect db = Connect.getConnection();
 		PreparedStatement ps = db.prepareStatement("SELECT * FROM `users` WHERE username = ? AND password = ?");
