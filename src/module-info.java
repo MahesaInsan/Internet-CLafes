@@ -1,3 +1,4 @@
+
 module projectLab {
 	opens controllers;
 	opens models;
@@ -5,6 +6,6 @@ module projectLab {
 	opens main;
 	requires javafx.graphics;
 	requires javafx.controls;
-	requires java.sql;
 	requires javafx.base;
+	requires java.sql;
 }

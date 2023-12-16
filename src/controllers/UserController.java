@@ -57,6 +57,7 @@ public class UserController {
 		
 		User user = new User();
 		user.addNewUser(username, password, age);
+		loginUser(errror, username, password);
 		return true;
 	}
 	
