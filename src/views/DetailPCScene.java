@@ -5,10 +5,14 @@ import controllers.UserController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.PC;
+import models.User;
 
 public class DetailPCScene implements IErrorMessage{
 	//Inisialisasi instance view
@@ -99,8 +103,24 @@ public class DetailPCScene implements IErrorMessage{
 		// TODO Auto-generated method stub
 		errorMsg.setText(error);
 	}
+	
+		//Inisiasi variable Navbar
+		MenuBar menuBar;
+		Menu adminMenu;
+		Menu custMenu;
+		Menu techMenu;
+		Menu operatorMenu;
+		MenuItem viewAdminPCMI;
+		MenuItem viewCustPCMI;
+		MenuItem viewReportMI;
+		MenuItem viewStaffJobMI;
+		MenuItem viewTransMI;
+		MenuItem viewStaffMI;
+		MenuItem viewTechJobMI;
+		MenuItem viewPCBookedMI;
+		MenuItem viewCustTransMI;
 
-		private MenuBar initiate(User user) {
+		private MenuBar navbar(User user) {
 		menuBar = new MenuBar();
 		
 		adminMenu = new Menu("Main Menu");
