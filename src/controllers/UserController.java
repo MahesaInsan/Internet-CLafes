@@ -1,6 +1,7 @@
 package controllers;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import models.User;
 import views.IErrorMessage;
@@ -60,14 +61,29 @@ public class UserController {
 	}
 	
 	
-	public void changeUserRole(String userID, String newRole) {
+	public boolean changeUserRole(IErrorMessage error, int userID, String newRole) throws SQLException{
+		if(newRole == null) {
+			error.displayErrorMessage("Role must be selected!");
+			return false;
+		}
+		
+		User.changeUserRole(userID, newRole);
+		return true;
 		
 	}
+	
 	public void getAllTechnician() {
 		
 	}
-	public void getAllUserData() {
-		
+	
+	public ArrayList<User> getAllUserData(IErrorMessage error) {
+		try {
+			return User.getAllUser();
+		} catch (SQLException e) {
+			error.displayErrorMessage("Error fetching user data");
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	private boolean checkUsername(String username) throws SQLException {
