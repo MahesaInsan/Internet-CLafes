@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import main.Connect;
 
 public class TransactionDetail {
+	//transaction detail attribute
 	private int transactionID;
 	private String pcID;
 	private String customerName;
 	private String bookedTime;
-	
+
+	//Constructor transaction detail untuk set id, pc id, customer name dan booked detail
 	public TransactionDetail(int id, String pcId, String customerName, String bookedTime) {
 		this.transactionID = id;
 		this.pcID = pcId;
@@ -23,23 +25,25 @@ public class TransactionDetail {
 	public void getUserTransactionDetail(String userID) {
 		
 	}
-	
+	//getter id
 	public int getTransactionID() {
 		return transactionID;
 	}
 
+	//getter pc id
 	public String getPcID() {
 		return pcID;
 	}
-
+	//getter customer name
 	public String getCustomerName() {
 		return customerName;
 	}
-
+	//getter booked time
 	public String getBookedTime() {
 		return bookedTime;
 	}
 
+	//Mengambil semua transaksi detail dari database yang memiliki transaction head yang sama
 	public static ArrayList<TransactionDetail> getAllTransaction(int transactionID) throws SQLException {
 		ArrayList<TransactionDetail> tDetList = new ArrayList<TransactionDetail>();
 		Connect db = Connect.getConnection();
@@ -56,6 +60,7 @@ public class TransactionDetail {
 		
 		return tDetList;
 	}
+	
 	public void addTransactionDetail(String transactionID, ArrayList<PCBook> pcBookList) {
 		
 	}
