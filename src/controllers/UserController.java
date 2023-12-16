@@ -114,7 +114,6 @@ public class UserController {
 			error.displayErrorMessage("Password is incorrect");
 			return false;
 		}else {
-			user.getAllUserData();
 			currentUser = user;
 			return true;
 		}
