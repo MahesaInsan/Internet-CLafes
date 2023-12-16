@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import models.PC;
 
 public class PCController {
+	//Mengambil semua data dari model PC dan mendisplay error jika tidak dapat melakukan fetching
 	public ArrayList<PC> getAllPCData(IErrorMessage error) {
 		try {
 			return PC.getAllPCData();
@@ -16,7 +17,8 @@ public class PCController {
 			return null;
 		}
 	}
-	
+
+	//Melakukan update pada pc yang dipilih dan menampilkan error jika status tidak dipilih
 	public boolean updatePCCondition(IErrorMessage error, String pcID, String condition) throws SQLException {
 		if(condition == null) {
 			error.displayErrorMessage("Condition must be selected");
@@ -25,7 +27,8 @@ public class PCController {
 		PC.updatePCCondition(pcID, condition);
 		return true;
 	}
-	
+
+	//Melakukan delete pada pc yang dipilih dan menampilkan error jika pc di book oleh user
 	public boolean deletePC(IErrorMessage error, String pcID) {
 		//check if pc is used
 		try {
@@ -47,7 +50,8 @@ public class PCController {
 		}
 		
 	}
-	
+
+	//Menambahkan pc ke dalam model/database dan menampilkan error sesuai validasi
 	public boolean addNewPC(IErrorMessage error, String pcID) throws SQLException {
 		if(pcID.equals("")) {
 			error.displayErrorMessage("All fields must be filled");
@@ -65,7 +69,8 @@ public class PCController {
 	public void getPCDetail(String pcID) {
 		
 	}
-	
+
+	//Mengecek apa pc id sudah digunakan atau belum
 	private boolean checkPCID(String pcID) throws SQLException {
 		if(PC.getPCDetail(pcID) == null) {
 			return false;
