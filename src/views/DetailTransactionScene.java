@@ -15,6 +15,7 @@ import models.TransactionDetail;
 import models.TransactionHeader;
 
 public class DetailTransactionScene {
+	//inisasi instance view
 	private static DetailTransactionScene instance;
 	
 	public static void setScene(Stage primaryStage, TransactionHeader tHead) {
@@ -23,7 +24,8 @@ public class DetailTransactionScene {
 		}
 		instance._setScene(primaryStage);
 	}
-	
+
+	//inisiasi variable java fx
 	TransactionHeader tHead;
 	Stage primaryStage;
 	Scene scene;
@@ -31,7 +33,8 @@ public class DetailTransactionScene {
 	TableView<TransactionDetail> tableView;
 	Button addButton;
 	VBox container;
-	
+
+	//Constructor untuk memanggil bagian bagian view
 	private DetailTransactionScene(TransactionHeader tHead) {
 		this.tHead = tHead;
 		initializeTable();
@@ -44,7 +47,8 @@ public class DetailTransactionScene {
 		
 		scene.setRoot(container);
 	}
-	
+
+	//Membuat table yang berisikan transaction detail
 	private void initializeTable() {
 		tableView = new TableView<TransactionDetail>();
 		
@@ -74,13 +78,15 @@ public class DetailTransactionScene {
 		tableView.getColumns().add(dateColumn);
 		tableView.setPlaceholder(new Label("No Rows to Display"));
 	}
-	
+
+	//Melakukan inisiasi set scene dan juga assign primary stage
 	private void _setScene(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		primaryStage.setScene(scene);
 		_repaint();
 	}
-	
+
+	//Melakukan repaint jika ada perubahan pada data ataupun awal inisiasi
 	public void _repaint() {
 		tableView.getItems().clear();
 		TransactionController controller = new TransactionController();
@@ -90,7 +96,7 @@ public class DetailTransactionScene {
 		}
 	}
 
-//Inisiasi variable Navbar
+	//Inisiasi variable Navbar
 	MenuBar menuBar;
 	Menu adminMenu;
 	Menu custMenu;
