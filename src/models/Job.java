@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import main.Connect;
 
 public class Job {
+	//Attribute untuk model Job
 	private int jobID;
 	private int userID;
 	private String pcID;
 	private String jobStatus;
 
+	//Getter setter
 	public int getJobID() {
 		return jobID;
 	}
@@ -45,6 +47,7 @@ public class Job {
 		this.jobStatus = jobStatus;
 	}
 
+	//Constructor untuk model Job
 	public Job(int jobID, int userID, String pcID, String jobStatus) {
 		super();
 		this.jobID = jobID;
@@ -57,6 +60,7 @@ public class Job {
 		
 	}
 
+	//Model untuk menambahkan job baru dan query databasenya
 	public static void addNewJob(String userID, String pcID) throws SQLException{
 		Connect db = Connect.getConnection();
 		int id = Integer.parseInt(userID);
@@ -66,7 +70,8 @@ public class Job {
 		ps.setString(3, "UnComplete");
 		ps.executeUpdate();
 	}
-	
+
+	//Method untuk mengganti status dari job dan menggantinya di database juga menggunakan query
 	public static void updateJobStatus(int jobID, String jobStatus) throws SQLException{
 		Connect db = Connect.getConnection();
 		PreparedStatement ps = db.prepareStatement("UPDATE job SET status = ? WHERE id = ?");
@@ -94,7 +99,8 @@ public class Job {
 	public void getPCOnWorkingList(String pcID) {
 		
 	}
-		
+
+	//Method untuk mengambil semua job dari database dan mereturn nya sebagai ArrayList yang berisi Job
 	public static ArrayList<Job> getAllJobData() throws SQLException{
 		ArrayList<Job> jobList = new ArrayList<Job>();
 		Connect db = Connect.getConnection();
