@@ -88,7 +88,8 @@ public class User {
 		ps.setString(4, "Customer");
 		ps.executeUpdate();
 	}
-	
+
+	//Method untuk mengganti role user dan mengganti nya juga di database menggunakan query
 	public static void changeUserRole(int userID, String newRole) throws SQLException{
 		Connect db = Connect.getConnection();
 		PreparedStatement ps = db.prepareStatement("UPDATE users SET role = ? WHERE id = ?");
@@ -127,7 +128,8 @@ public class User {
 
 	    return technicians;
 	}
-	
+
+	//Method untuk mengambil data semua user di database
 	public static ArrayList<User> getAllUser() throws SQLException{
 		ArrayList<User> staffList = new ArrayList<User>();
 		Connect db = Connect.getConnection();
@@ -152,7 +154,8 @@ public class User {
 			return true;
 		}else return false;
 	}
-	
+
+	//Method untuk mengambil satu user dan mereturnya kepada controller untuk memeriksa staff role
 	public static User checkStaffRole(String staffId) throws SQLException{
 		Connect db = Connect.getConnection();
 		int idNum = Integer.parseInt(staffId);
