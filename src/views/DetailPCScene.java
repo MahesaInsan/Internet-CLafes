@@ -11,15 +11,18 @@ import javafx.stage.Stage;
 import models.PC;
 
 public class DetailPCScene implements IErrorMessage{
+	//Inisialisasi instance view
 	public static void setScene(Stage primaryStage, PC pc) {
 		DetailPCScene detailPC = new DetailPCScene(pc);
 		detailPC._setScene(primaryStage);
 	}
-	
+
+	//Inisiasis set scene
 	public static void setScene(Stage primaryStage) {
 		setScene(primaryStage);
 	}
-	
+
+	//Inisiasi variable javafx
 	PC pc;
 	Stage primaryStage;
 	Scene scene;
@@ -30,7 +33,8 @@ public class DetailPCScene implements IErrorMessage{
 	Label errorMsg;
 	Button editButton;
 	Button deleteButton;
-	
+
+	//Constructor untuk memanggil masing-masing function bagian
 	private DetailPCScene(PC pc) {
 		this.pc = pc;
 		container = new VBox();
@@ -47,7 +51,7 @@ public class DetailPCScene implements IErrorMessage{
 		scene.setRoot(container);
 	}
 	
-	
+	//Inisiasi untuk display pc id
 	private void initializePCID() {
 		HBox pcIDDiv = new HBox();
 		
@@ -55,7 +59,8 @@ public class DetailPCScene implements IErrorMessage{
 		pcIDDiv.getChildren().addAll(pcIDLabel);
 		container.getChildren().add(pcIDDiv);
 	}
-	
+
+	//inisiasi untuk display pc condition
 	private void initializePCCondition() {
 		HBox pcConditionDiv = new HBox();
 		
@@ -63,7 +68,8 @@ public class DetailPCScene implements IErrorMessage{
 		pcConditionDiv.getChildren().add(pcConditionLabel);
 		container.getChildren().add(pcConditionDiv);
 	}
-	
+
+	//inisiasi button untuk edit dan delete
 	private void initializeButton() {
 		editButton = new Button("Edit");
 		editButton.setOnAction(event -> {
@@ -80,12 +86,14 @@ public class DetailPCScene implements IErrorMessage{
 		});
 		container.getChildren().addAll(editButton, deleteButton);
 	}
-	
+
+	//inisasi set scene dan melakukan assign primary stage
 	private void _setScene(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		primaryStage.setScene(scene);
 	}
 
+	//display error message
 	@Override
 	public void displayErrorMessage(String error) {
 		// TODO Auto-generated method stub
