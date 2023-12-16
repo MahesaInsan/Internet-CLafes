@@ -7,18 +7,16 @@ import models.User;
 import views.IErrorMessage;
 
 public class UserController {
-	
+	//Menyimpan user yang sudah di authorisasi
 	public static User currentUser;
-	
-	public void getUserData(String username, String password) {
-		
-	}
-	
+
+	//Mengecek role dari user
 	public static String getAuthorization() {
 		System.out.println(currentUser.getRole());
 		return currentUser.getRole();
 	}
-	
+
+	//Menambahkan user ke dalam model dan melakukan validasi pada input yang dilakukan oleh user
 	public boolean addNewUser(IErrorMessage error, String username, String password, String confpass, int age) throws SQLException{
 		final boolean CHECKFIELD = (username.equals("") || password.equals("") || confpass.equals(""));
 		
@@ -61,7 +59,7 @@ public class UserController {
 		return true;
 	}
 	
-	
+	//Mengubah role user
 	public boolean changeUserRole(IErrorMessage error, int userID, String newRole) throws SQLException{
 		if(newRole == null) {
 			error.displayErrorMessage("Role must be selected!");
@@ -72,11 +70,13 @@ public class UserController {
 		return true;
 		
 	}
-	
+
+	//Mengambil semua data technician
 	public void getAllTechnician() {
 		
 	}
-	
+
+	//Mengambil semua data user dari database dan memberikan error jika fetch tidak berhasil
 	public ArrayList<User> getAllUserData(IErrorMessage error) {
 		try {
 			return User.getAllUser();
@@ -86,12 +86,14 @@ public class UserController {
 			return null;
 		}
 	}
-	
+
+	//Mengecek apakah username sudah diambil
 	private boolean checkUsername(String username) throws SQLException {
 		User user = new User();
 		return user.checkUsername(username);
 	}
-	
+
+	//Melakukan login user dan juga validasi pada input yang dilakukan user
 	public boolean loginUser(IErrorMessage error, String username, String password) throws SQLException {
 		final boolean CHECKFIELD = (username.equals("") || password.equals(""));
 		
@@ -117,7 +119,8 @@ public class UserController {
 			return true;
 		}
 	}
-	
+
+	//Melakukan check apakah password yang diinput alphanumeric
 	private boolean checkAlphaNumeric(String password) {
 		for (char ch : password.toCharArray()) {
 			if(!Character.isLetterOrDigit(ch)) {
