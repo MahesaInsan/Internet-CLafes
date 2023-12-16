@@ -50,7 +50,7 @@ public class CompleteJobView extends Application {
     private void completeJob() {
         String jobID = jobIdField.getText();
         try {
-			jobController.updateJobStatus(jobID, "Complete");
+			jobController.completeJobStatus(jobID, "Complete");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
