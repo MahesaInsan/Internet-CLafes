@@ -11,6 +11,7 @@ import views.IErrorMessage;
 public class JobController {
 	private Job job;
 
+	//Method controller untuk validasi dari logika add new job
 	public boolean addNewJob(IErrorMessage error, String userID, String pcID) throws SQLException{
 		
 		if(pcID.equals("")) {
@@ -42,6 +43,8 @@ public class JobController {
 		PC.updatePCCondition(pcID, "Maintenance");
 		return true;
 	}
+
+	//Method controller untuk validasi pada logika update job status
 	public boolean updateJobStatus(int jobID, String jobStatus, String pcID) throws SQLException{
 		if(jobStatus.equals("Complete")) {
 			Job.updateJobStatus(jobID, jobStatus);
@@ -79,6 +82,7 @@ public class JobController {
 	public void getPCOnWorkingList(String pcID) {
 		
 	}
+	
 	public ArrayList<Job> getTechnicianJob(int userID) throws SQLException{
 		try {
 			ArrayList<Job> technicianJobs = Job.getTechnicianJobs(userID);
@@ -94,13 +98,15 @@ public class JobController {
 		return null;
 		
 	}
-	
+
+	//Method untuk memeriksa apakah PCid exist
 	private boolean checkPCID(String pcID) throws SQLException {
 		if(PC.getPCDetail(pcID) == null) {
 			return true;
 		}else return false;
 	}
-	
+
+	//Method untuk memeriksa role user apakah computer technician
 	private boolean checkUserRole(String userID) throws SQLException{
 		User staff = User.checkStaffRole(userID);
 		String Role = staff.getRole();
@@ -108,14 +114,16 @@ public class JobController {
 			return false;
 		}else return true;
 	}
-	
+
+	//Method untuk memeriksa apakah staff tersebut exist
 	private boolean checkStaff(String userID) throws SQLException{
 		User staff = User.checkStaffRole(userID);
 		if(staff == null) {
 			return true;
 		}else return false;
 	}
-	
+
+	//method untuk memeriksa status dari PC
 	private boolean checkPCStatus(String pcID) throws SQLException{
 		PC pc = PC.getPCDetail(pcID);
 		if(pc.getPcCondition().equals("Maintenance")) {
