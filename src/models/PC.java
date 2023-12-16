@@ -10,7 +10,7 @@ import main.Connect;
 public class PC {
 	//Attribute pc
 	private String pcID;
-	private String condition;
+	private String pcCondition;
 
 	//Constructor pc untuk set id dan condition
 	public PC(String id, String condition) {
