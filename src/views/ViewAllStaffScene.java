@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import models.User;
 
 public class ViewAllStaffScene implements IErrorMessage{
+//inisialisasi instance
 private static ViewAllStaffScene instance;
 	
 	public static void setScene(Stage primaryStage) {
@@ -31,7 +32,8 @@ private static ViewAllStaffScene instance;
 		}
 		instance._setScene(primaryStage);
 	}
-	
+
+	//JavaFX component
 	Stage primaryStage;
 	VBox container;
 	HBox roleDropDownDiv;
@@ -40,11 +42,12 @@ private static ViewAllStaffScene instance;
 	TableView<User> tableView;
 	Button updateButton;
 	ComboBox<String> roleDropDown;
-	
+
+	//variable untuk menyimpan event listener
 	int selectedUserID;
 	
 	
-	
+	//method constructor untuk class ini
 	private ViewAllStaffScene() {
 		initializeTable();
 		initializeDropdown();
@@ -58,7 +61,8 @@ private static ViewAllStaffScene instance;
 		
 		scene.setRoot(container);
 	}
-	
+
+	//method untuk inisialisasi tableView yang berisi data user
 	private void initializeTable() {
 		tableView = new TableView<User>();
 		selectedUserID = 0;
@@ -89,7 +93,8 @@ private static ViewAllStaffScene instance;
 	    tableView.getColumns().add(roleColumn);
 		tableView.setPlaceholder(new Label("No Rows to Display"));
 	}
-	
+
+	//method untuk inisialisasi update button dimana jika di click akan menjalankan logika update
 	private void initializeUpdateButton() {
 		updateButton = new Button("Update User role");
 		updateButton.setOnAction(event -> {
@@ -123,7 +128,8 @@ private static ViewAllStaffScene instance;
 			ViewAllStaffScene.setScene(primaryStage);
 		});
 	}
-	
+
+	//method untuk inisialisasi dropdown role untuk memilih role baru untuk di update
 	private void initializeDropdown() {
 		String role [] = {
 				"Admin",
@@ -139,6 +145,7 @@ private static ViewAllStaffScene instance;
 		roleDropDownDiv.getChildren().addAll(roleDropDownLabel, roleDropDown);
 	}
 	
+	//Event listener untuk mengambil data dari table yang sedang di click
 	private void addEventListener() {
 		tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>() {
 			@Override
@@ -149,13 +156,15 @@ private static ViewAllStaffScene instance;
 			}
 		});
 	}
-	
+
+	//Method untuk set scene
 	private void _setScene(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		primaryStage.setScene(scene);
 		_repaint();
 	}
-	
+
+	//method repaint untuk mengambil data dari database untuk ditampilkan di tableview
 	public void _repaint() {
 		tableView.getItems().clear();
 		UserController controller = new UserController();
@@ -165,6 +174,7 @@ private static ViewAllStaffScene instance;
 		}
 	}
 
+	//Method untuk menampilkan error message
 	@Override
 	public void displayErrorMessage(String error) {
 		// TODO Auto-generated method stub
