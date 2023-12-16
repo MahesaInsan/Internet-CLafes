@@ -39,7 +39,7 @@ public class PC {
 	
 	public static void addNewPC(String pcID) throws SQLException {
 		Connect db = Connect.getConnection();
-		PreparedStatement ps = db.prepareStatement("INSERT INTO pc (pcID, pcCondition) VALUES (?, ?)");
+		PreparedStatement ps = db.prepareStatement("INSERT INTO pc (id, pcCondition) VALUES (?, ?)");
 		ps.setString(1, pcID);
 		ps.setString(2, "Usable");
 		ps.executeUpdate();
