@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import models.PC;
 
 public class DisplayAllPCScene  implements IErrorMessage{
+	//inisiasi instance
 	private static DisplayAllPCScene instance;
 	
 	public static void setScene(Stage primaryStage) {
@@ -25,14 +26,16 @@ public class DisplayAllPCScene  implements IErrorMessage{
 		}
 		instance._setScene(primaryStage);
 	}
-	
+
+	//inisasi variable javafx
 	Stage primaryStage;
 	Scene scene;
 	// Table
 	TableView<PC> tableView;
 	Button addButton;
 	VBox container;
-	
+
+	//Constructor untuk memanggil setiap bagian yang ada di function
 	private DisplayAllPCScene() {
 		initializeTable();
 		// Add item to container
@@ -45,7 +48,8 @@ public class DisplayAllPCScene  implements IErrorMessage{
 		
 		scene.setRoot(container);
 	}
-	
+
+	//Inisaliasi tabel yang berisikan informasi pc
 	private void initializeTable() {
 		tableView = new TableView<PC>();
 		
@@ -86,7 +90,8 @@ public class DisplayAllPCScene  implements IErrorMessage{
 		tableView.getColumns().add(actionColumn);
 		tableView.setPlaceholder(new Label("No Rows to Display"));
 	}
-	
+
+	//Melakukan inisialisasi add button untuk memindahkan user ke view add pc
 	private void initializeAddButton() {
 		addButton = new Button("Add PC");
 		addButton.setOnAction(event -> {
@@ -94,13 +99,15 @@ public class DisplayAllPCScene  implements IErrorMessage{
 		});
 		container.getChildren().add(addButton);
 	}
-	
+
+	//Melakukan inisiasi set scene dan juga meng assign primary stage
 	private void _setScene(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		primaryStage.setScene(scene);
 		_repaint();
 	}
-	
+
+	//Merubah table jika terdapat perubahan data atau inisiasi pertama
 	public void _repaint() {
 		tableView.getItems().clear();
 		PCController controller = new PCController();
@@ -110,6 +117,7 @@ public class DisplayAllPCScene  implements IErrorMessage{
 		}
 	}
 
+	//Memberikan error jika ada
 	@Override
 	public void displayErrorMessage(String error) {
 		// TODO Auto-generated method stub
