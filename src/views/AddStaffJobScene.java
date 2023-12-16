@@ -11,7 +11,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class AddStaffJobScene implements IErrorMessage{
-	
 	public static void setScene(Stage primaryStage) {
 		AddStaffJobScene addJob = new AddStaffJobScene();
 		addJob._setScene(primaryStage);
