@@ -14,15 +14,18 @@ import javafx.stage.Stage;
 import models.PC;
 
 public class EditPCScene implements IErrorMessage{
+	//Inisiasi view editPc
 	public static void setScene(Stage primaryStage, PC pc) {
 		EditPCScene editPC = new EditPCScene(pc);
 		editPC._setScene(primaryStage);
 	}
-	
+
+	//Melakukan inisiasi set scene
 	public static void setScene(Stage primaryStage) {
 		setScene(primaryStage);
 	}
-	
+
+	//Inisiasi variable javafx
 	PC pc;
 	Stage primaryStage;
 	Scene scene;
@@ -33,7 +36,8 @@ public class EditPCScene implements IErrorMessage{
 	ComboBox<String> pcConditionInput;
 	Label errorMsg;
 	Button saveButton;
-	
+
+	//Constructor untuk memanggil bagian dari view
 	private EditPCScene(PC pc) {
 		this.pc = pc;
 		container = new VBox();
@@ -51,7 +55,7 @@ public class EditPCScene implements IErrorMessage{
 		scene.setRoot(container);
 	}
 	
-	
+	//Memberikan display pc yang akan diubah
 	private void initializePCID() {
 		HBox pcIDDiv = new HBox();
 		
@@ -59,7 +63,8 @@ public class EditPCScene implements IErrorMessage{
 		pcIDDiv.getChildren().add(pcIDLabel);
 		container.getChildren().add(pcIDDiv);
 	}
-	
+
+	//Memberikan menu drop down untuk mengubah kondisi pc
 	private void initializePCCondition() {
 		String conditions [] = {
 				"Usable",
@@ -74,7 +79,8 @@ public class EditPCScene implements IErrorMessage{
 		pcConditionDiv.getChildren().addAll(pcConditionLabel, pcConditionInput);
 		container.getChildren().add(pcConditionDiv);
 	}
-	
+
+	//Melakukan inisialisasi save button yang akan diklik untuk mengubah data pc
 	private void initializeSaveButton() {
 		saveButton = new Button("Save PC");
 		saveButton.setOnAction(event -> {
@@ -91,12 +97,14 @@ public class EditPCScene implements IErrorMessage{
 			DisplayAllPCScene.setScene(primaryStage);
 		});
 	}
-	
+
+	//Melakukan inisiasi set scene dan assign primary stage
 	private void _setScene(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		primaryStage.setScene(scene);
 	}
 
+	//Memberikan display error
 	@Override
 	public void displayErrorMessage(String error) {
 		// TODO Auto-generated method stub
