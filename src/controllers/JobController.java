@@ -70,6 +70,8 @@ public class JobController {
 			// TODO: handle exception
 		}
 	}
+
+	//Metode untuk mengambil data pada getAllJobData dan memberitahu error menggunakan interface
 	public ArrayList<Job> getAllJobData(IErrorMessage error) {
 		try {
 			return Job.getAllJobData();
@@ -82,7 +84,8 @@ public class JobController {
 	public void getPCOnWorkingList(String pcID) {
 		
 	}
-	
+
+	//Metode untuk mencek data TechnicianJob dan memberi feedback mengenai retrieval status
 	public ArrayList<Job> getTechnicianJob(int userID) throws SQLException{
 		try {
 			ArrayList<Job> technicianJobs = Job.getTechnicianJobs(userID);
