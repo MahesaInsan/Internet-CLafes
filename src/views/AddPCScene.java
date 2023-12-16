@@ -3,15 +3,20 @@ package views;
 import java.sql.SQLException;
 
 import controllers.PCController;
+import controllers.UserController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.PC;
+import models.User;
 
 public class AddPCScene implements IErrorMessage{
 	//inisialisasi instance
@@ -111,7 +116,7 @@ public class AddPCScene implements IErrorMessage{
 	MenuItem viewCustTransMI;
 	
 	//Membuat navbar dan memberikan label setiap navbar
-	public MenuBar initiate(User user) {
+	public MenuBar navbar(User user) {
 		menuBar = new MenuBar();
 		
 		adminMenu = new Menu("Main Menu");
