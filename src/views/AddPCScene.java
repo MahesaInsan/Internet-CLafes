@@ -14,15 +14,18 @@ import javafx.stage.Stage;
 import models.PC;
 
 public class AddPCScene implements IErrorMessage{
+	//inisialisasi instance
 	public static void setScene(Stage primaryStage) {
 		AddPCScene addPC = new AddPCScene();
 		addPC._setScene(primaryStage);
 	}
-	
+
+	//insialisasi set scene
 	public static void setScene(Stage primaryStage, PC pc) {
 		setScene(primaryStage);
 	}
-	
+
+	//inisialisasi variable javafx
 	Stage primaryStage;
 	Scene scene;
 	VBox container;
@@ -33,7 +36,8 @@ public class AddPCScene implements IErrorMessage{
 	ComboBox<String> pcConditionInput;
 	Label errorMsg;
 	Button addButton;
-	
+
+	//Constructor untuk memanggil function
 	private AddPCScene() {
 		container = new VBox();
 		container.getChildren().add(navbar(UserController.currentUser));
@@ -49,7 +53,7 @@ public class AddPCScene implements IErrorMessage{
 		scene.setRoot(container);
 	}
 	
-	
+	//Inisialisasi input pc id
 	private void initializePCID() {
 		HBox pcIDDiv = new HBox();
 		
@@ -58,7 +62,8 @@ public class AddPCScene implements IErrorMessage{
 		pcIDDiv.getChildren().addAll(pcIDLabel, pcIDInput);
 		container.getChildren().add(pcIDDiv);
 	}
-	
+
+	//Inisialisasi input add button
 	private void initializeAddButton() {
 		addButton = new Button("Save PC");
 		addButton.setOnAction(event -> {
@@ -75,12 +80,14 @@ public class AddPCScene implements IErrorMessage{
 			DisplayAllPCScene.setScene(primaryStage);
 		});
 	}
-	
+
+	//Inisialisasi set scene dan menyimpan primary stage
 	private void _setScene(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		primaryStage.setScene(scene);
 	}
 
+	//Display error message
 	@Override
 	public void displayErrorMessage(String error) {
 		// TODO Auto-generated method stub
