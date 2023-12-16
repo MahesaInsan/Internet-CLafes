@@ -26,8 +26,16 @@ public class PCController {
 		return true;
 	}
 	
-	public boolean deletePC(String pcID) {
+	public boolean deletePC(IErrorMessage error, String pcID) {
 		//check if pc is used
+		try {
+			if(checkPCID(pcID)) {
+				error.displayErrorMessage("This PC is booked by user!");
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try {
 			PC.deletePC(pcID);

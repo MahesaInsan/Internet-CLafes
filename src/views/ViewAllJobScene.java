@@ -41,7 +41,7 @@ public class ViewAllJobScene implements IErrorMessage{
 	ComboBox<String> jobDropDown;
 	Label jobDropDownLabel;
 	
-	String selectedJobID = "empty";
+	int selectedJobID = 0;
 	String selectedJobPC = "";
 	
 	private ViewAllJobScene() {
@@ -112,7 +112,7 @@ public class ViewAllJobScene implements IErrorMessage{
 	private void initializeUpdateButton() {
 		updateButton = new Button("Update job");
 		updateButton.setOnAction(event -> {
-			if(selectedJobID.equals("empty")) {
+			if(selectedJobID == 0) {
 				Alert alert = new Alert
 						(AlertType.ERROR, "Please select a Job !");
 				

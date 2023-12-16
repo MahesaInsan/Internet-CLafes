@@ -10,13 +10,8 @@ import views.IErrorMessage;
 
 public class JobController {
 	private Job job;
-	
-	
-	public JobController() {
-		this.job = new Job();
-	}
 
-	public boolean addNewJob(IErrorMessage error, String userID, String pcID) {
+	public boolean addNewJob(IErrorMessage error, String userID, String pcID) throws SQLException{
 		
 		if(pcID.equals("")) {
 			error.displayErrorMessage("All fields must be filled");
@@ -47,7 +42,7 @@ public class JobController {
 		PC.updatePCCondition(pcID, "Maintenance");
 		return true;
 	}
-	public boolean updateJobStatus(String jobID, String jobStatus, String pcID) throws SQLException{
+	public boolean updateJobStatus(int jobID, String jobStatus, String pcID) throws SQLException{
 		if(jobStatus.equals("Complete")) {
 			Job.updateJobStatus(jobID, jobStatus);
 			PC.updatePCCondition(pcID, "Usable");
@@ -86,7 +81,7 @@ public class JobController {
 	}
 	public ArrayList<Job> getTechnicianJob(int userID) throws SQLException{
 		try {
-			ArrayList<Job> technicianJobs = job.getTechnicianJobs(userID);
+			ArrayList<Job> technicianJobs = Job.getTechnicianJobs(userID);
 			if(technicianJobs.isEmpty()) {
 				System.out.println("No Jobs Assigned to the Technician yet");
 			}

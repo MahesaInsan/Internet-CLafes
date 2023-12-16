@@ -33,7 +33,7 @@ public class Job {
 		return pcID;
 	}
 
-	public void setPcID(int pcID) {
+	public void setPcID(String pcID) {
 		this.pcID = pcID;
 	}
 
@@ -45,12 +45,16 @@ public class Job {
 		this.jobStatus = jobStatus;
 	}
 
-	public Job(String jobID, String userID, String pcID, String jobStatus) {
+	public Job(int jobID, int userID, String pcID, String jobStatus) {
 		super();
 		this.jobID = jobID;
 		this.userID = userID;
 		this.pcID = pcID;
 		this.jobStatus = jobStatus;
+	}
+	
+	public Job() {
+		
 	}
 
 	public static void addNewJob(String userID, String pcID) throws SQLException{
@@ -63,13 +67,13 @@ public class Job {
 		ps.executeUpdate();
 	}
 	
-	public static void updateJobStatus(String jobID, String jobStatus) throws SQLException{
+	public static void updateJobStatus(int jobID, String jobStatus) throws SQLException{
 		Connect db = Connect.getConnection();
-		int id = Integer.parseInt(jobID);
 		PreparedStatement ps = db.prepareStatement("UPDATE job SET status = ? WHERE id = ?");
 		ps.setString(1, jobStatus);
-		ps.setInt(2, id);
+		ps.setInt(2, jobID);
 		ps.executeUpdate();
+	}
 	
 	public void completeJobStatus(String jobID, String jobStatus)throws SQLException {
 		try {
@@ -90,8 +94,7 @@ public class Job {
 	public void getPCOnWorkingList(String pcID) {
 		
 	}
-	
-	
+		
 	public static ArrayList<Job> getAllJobData() throws SQLException{
 		ArrayList<Job> jobList = new ArrayList<Job>();
 		Connect db = Connect.getConnection();
@@ -101,27 +104,27 @@ public class Job {
 		ResultSet rs = ps.executeQuery();
 		
 		while(rs.next()) {
-			jobList.add(new Job(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+			jobList.add(new Job(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4)));
 		}
 		
 		return jobList;
 		
 	}
-	public ArrayList<Job> getTechnicianJobs(int userID) throws SQLException {
+	public static ArrayList<Job> getTechnicianJobs(int userID) throws SQLException {
         ArrayList<Job> technicianJobs = new ArrayList<>();
         try {
             Connect db = Connect.getConnection();
-            String query = "SELECT * FROM job WHERE userID = ?";
+            String query = "SELECT * FROM job WHERE staffId = ?";
             try (PreparedStatement ps = db.prepareStatement(query)) {
                 ps.setInt(1, userID);
 
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
                         Job job = new Job();
-                        job.setJobID(rs.getInt("jobID"));
-                        job.setUserID(rs.getInt("userID"));
-                        job.setPcID(rs.getInt("pcID"));
-                        job.setJobStatus(rs.getString("jobStatus"));
+                        job.setJobID(rs.getInt("id"));
+                        job.setUserID(rs.getInt("staffId"));
+                        job.setPcID(rs.getString("pcId"));
+                        job.setJobStatus(rs.getString("status"));
 
                         technicianJobs.add(job);
                     }
