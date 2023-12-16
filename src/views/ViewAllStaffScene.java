@@ -6,13 +6,14 @@ import controllers.UserController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
@@ -23,8 +24,8 @@ import javafx.stage.Stage;
 import models.User;
 
 public class ViewAllStaffScene implements IErrorMessage{
-//inisialisasi instance
-private static ViewAllStaffScene instance;
+	//inisialisasi instance
+	private static ViewAllStaffScene instance;
 	
 	public static void setScene(Stage primaryStage) {
 		if(instance == null) {
@@ -199,7 +200,7 @@ private static ViewAllStaffScene instance;
 	MenuItem viewCustTransMI;
 	
 	//Membuat navbar dan memberikan label setiap navbar
-	private MenuBar initiate(User user) {
+	private MenuBar navbar(User user) {
 		menuBar = new MenuBar();
 		
 		adminMenu = new Menu("Main Menu");
