@@ -3,6 +3,7 @@ package views;
 import java.util.ArrayList;
 
 import controllers.JobController;
+import controllers.UserController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,6 +12,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
@@ -19,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Job;
+import models.User;
 
 public class ViewAllJobScene implements IErrorMessage{
 	//initialize instance
@@ -204,7 +209,7 @@ public class ViewAllJobScene implements IErrorMessage{
 	MenuItem viewCustTransMI;
 	
 	//Membuat navbar dan memberikan label setiap navbar
-	private MenuBar initiate(User user) {
+	private MenuBar navbar(User user) {
 		menuBar = new MenuBar();
 		
 		adminMenu = new Menu("Main Menu");
