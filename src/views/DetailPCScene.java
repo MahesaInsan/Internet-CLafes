@@ -72,7 +72,7 @@ public class DetailPCScene implements IErrorMessage{
 		deleteButton = new Button("Delete");
 		deleteButton.setOnAction(event -> {
 			PCController controller = new PCController();
-			controller.deletePC(pc.getPcID());
+			if(!controller.deletePC(this, pc.getPcID())) return;
 			this.pc = null;
 			
 			DisplayAllPCScene.setScene(primaryStage);
