@@ -65,9 +65,10 @@ public class Job {
 	
 	public static void updateJobStatus(String jobID, String jobStatus) throws SQLException{
 		Connect db = Connect.getConnection();
+		int id = Integer.parseInt(jobID);
 		PreparedStatement ps = db.prepareStatement("UPDATE job SET status = ? WHERE id = ?");
 		ps.setString(1, jobStatus);
-		ps.setString(2, jobID);
+		ps.setInt(2, id);
 		ps.executeUpdate();
 	}
 	

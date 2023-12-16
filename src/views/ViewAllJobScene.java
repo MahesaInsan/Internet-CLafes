@@ -52,7 +52,7 @@ public class ViewAllJobScene implements IErrorMessage{
 		addEventListener();
 		
 		container = new VBox();
-		container.getChildren().addAll(tableView, addButton, updateJobDiv, updateButton, completeButton);
+		container.getChildren().addAll(tableView, addButton, updateJobDiv, updateButton);
 		
 		scene = new Scene(container);
 		
