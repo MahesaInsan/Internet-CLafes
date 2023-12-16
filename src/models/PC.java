@@ -45,6 +45,18 @@ public class PC {
 		ps.executeUpdate();
 	}
 	
+	public static boolean checkPC(String pcID) throws SQLException{
+		Connect db = Connect.getConnection();
+		PreparedStatement ps = db.prepareStatement("SELECT * FROM pcbook WHERE pcId = ?");
+		ps.setString(1, pcID);
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()) {
+			return true;
+		}
+		return false;
+	}
+	
 	public static PC getPCDetail(String pcID) throws SQLException {
 		Connect db = Connect.getConnection();
 		PreparedStatement ps = db.prepareStatement("SELECT * FROM pc WHERE id = ?");
