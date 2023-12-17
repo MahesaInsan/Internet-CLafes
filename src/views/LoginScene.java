@@ -3,6 +3,7 @@ package views;
 import java.sql.SQLException;
 
 import controllers.UserController;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -11,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class LoginScene implements IErrorMessage{
@@ -38,7 +40,8 @@ public class LoginScene implements IErrorMessage{
 
 	//Constructor login untuk memanggil function yang ada
 	private LoginScene() {
-		container = new VBox();
+		container = new VBox(10);
+		container.setPadding(new Insets(10,10,10,10));
 		initializeUsername();
 		initializePassword();
 		errorLabel = new Label();
@@ -52,8 +55,8 @@ public class LoginScene implements IErrorMessage{
 
 	//Inisialisasi untuk meminta input username
 	private void initializeUsername() {
-		HBox usernameDiv = new HBox();
-		usernameLabel = new Label("Username");
+		HBox usernameDiv = new HBox(5);
+		usernameLabel = new Label("Username:");
 		usernameInput = new TextField();
 		usernameDiv.getChildren().addAll(usernameLabel, usernameInput);
 		container.getChildren().add(usernameDiv);
@@ -61,8 +64,8 @@ public class LoginScene implements IErrorMessage{
 
 	//Inisialisasi untuk meminta input password
 	private void initializePassword() {
-		HBox passwordDiv = new HBox();
-		passwordLabel = new Label("Password");
+		HBox passwordDiv = new HBox(5);
+		passwordLabel = new Label("Password:");
 		passwordInput = new PasswordField();
 		passwordDiv.getChildren().addAll(passwordLabel, passwordInput);
 		container.getChildren().add(passwordDiv);
@@ -106,5 +109,6 @@ public class LoginScene implements IErrorMessage{
 	public void displayErrorMessage(String error) {
 		// TODO Auto-generated method stub
 		errorLabel.setText(error);
+		errorLabel.setTextFill(Color.RED);
 	}
 }
