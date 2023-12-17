@@ -42,7 +42,7 @@ public class PC {
 	//Menghapus pc dari database
 	public static void deletePC(String pcID) throws SQLException {
 		Connect db = Connect.getConnection();
-		PreparedStatement ps = db.prepareStatement("DELETE FROM `PC` WHERE pcID = ?");
+		PreparedStatement ps = db.prepareStatement("DELETE FROM `PC` WHERE idD = ?");
 		ps.setString(1, pcID);
 		ps.executeUpdate();
 	}
@@ -59,7 +59,7 @@ public class PC {
 	//Mengecek apakah terdapat pc id tersebut di dalam database
 	public static boolean checkPC(String pcID) throws SQLException{
 		Connect db = Connect.getConnection();
-		PreparedStatement ps = db.prepareStatement("SELECT * FROM `PcBook` WHERE pcId = ?");
+		PreparedStatement ps = db.prepareStatement("SELECT * FROM `PcBook` WHERE id = ?");
 		ps.setString(1, pcID);
 		ResultSet rs = ps.executeQuery();
 		
