@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import controllers.PCController;
 import controllers.UserController;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -14,6 +16,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.PC;
 import models.User;
@@ -35,6 +38,7 @@ public class EditPCScene implements IErrorMessage{
 	Stage primaryStage;
 	Scene scene;
 	VBox container;
+	VBox mainDiv;
 	
 	Label pcIDLabel;
 	Label pcConditionLabel;
@@ -46,27 +50,33 @@ public class EditPCScene implements IErrorMessage{
 	private EditPCScene(PC pc) {
 		this.pc = pc;
 		container = new VBox();
-		container.getChildren().add(navbar(UserController.currentUser));
+		mainDiv = new VBox(10);
+		mainDiv.setPadding(new Insets(10, 10, 10, 10));
+		mainDiv.getChildren().add(new Label("PC EDIT"));
+		
 		initializePCID();
 		initializePCCondition();
 		
 		errorMsg = new Label();
-		container.getChildren().add(errorMsg);
+		mainDiv.getChildren().add(errorMsg);
 		
 		initializeSaveButton();
-		container.getChildren().add(saveButton);
+		mainDiv.getChildren().add(saveButton);
+		
+		container.getChildren().addAll(navbar(UserController.currentUser), mainDiv);
 		
 		scene = new Scene(container);
 		scene.setRoot(container);
+		mainDiv.setAlignment(Pos.CENTER);
 	}
 	
 	//Memberikan display pc yang akan diubah
 	private void initializePCID() {
-		HBox pcIDDiv = new HBox();
+		HBox pcIDDiv = new HBox(5);
 		
 		pcIDLabel = new Label("PC ID: " + pc.getPcID());
 		pcIDDiv.getChildren().add(pcIDLabel);
-		container.getChildren().add(pcIDDiv);
+		mainDiv.getChildren().add(pcIDDiv);
 	}
 
 	//Memberikan menu drop down untuk mengubah kondisi pc
@@ -77,12 +87,12 @@ public class EditPCScene implements IErrorMessage{
 				"Broken"
 		};
 		
-		HBox pcConditionDiv = new HBox();
+		HBox pcConditionDiv = new HBox(5);
 		
-		Label pcConditionLabel = new Label("PC Condition");
+		Label pcConditionLabel = new Label("PC Condition: ");
 		pcConditionInput = new ComboBox<String>(FXCollections.observableArrayList(conditions));
 		pcConditionDiv.getChildren().addAll(pcConditionLabel, pcConditionInput);
-		container.getChildren().add(pcConditionDiv);
+		mainDiv.getChildren().add(pcConditionDiv);
 	}
 
 	//Melakukan inisialisasi save button yang akan diklik untuk mengubah data pc
@@ -114,6 +124,7 @@ public class EditPCScene implements IErrorMessage{
 	public void displayErrorMessage(String error) {
 		// TODO Auto-generated method stub
 		errorMsg.setText(error);
+		errorMsg.setTextFill(Color.RED);
 	}
 	
 	//Inisiasi variable Navbar
