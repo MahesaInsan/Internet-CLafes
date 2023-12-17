@@ -54,8 +54,8 @@ public class TransactionDetail {
 	public static ArrayList<TransactionDetail> getAllTransaction(int transactionID) throws SQLException {
 		ArrayList<TransactionDetail> tDetList = new ArrayList<TransactionDetail>();
 		
-		PreparedStatement ps = db.prepareStatement("SELECT t.id, b.pcId, u.username, t.bookedTime FROM TransactionDetail t INNER JOIN Users u ON t.customerId = u.id "
-				+ "INNER JOIN PcBook b ON b.tDetId = t.id WHERE theadId = ?");
+		PreparedStatement ps = db.prepareStatement("SELECT t.id, t.pcId, u.username, t.bookedTime FROM TransactionDetail t INNER JOIN Users u ON t.customerId = u.id "
+				+ "WHERE theadId = ?");
 		
 		ps.setInt(1, transactionID);
 		ResultSet rs = ps.executeQuery();
