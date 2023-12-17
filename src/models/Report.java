@@ -5,6 +5,7 @@ import main.Connect;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Report {
@@ -18,13 +19,14 @@ public class Report {
     
     public void addNewReport(int userId, String pcId, String reportNote, String userRole) throws SQLException {
         try {
-            if ("Customer".equals(userRole) || "Operator".equals(userRole)) {
+            if (userRole.equals("Customer") || userRole.equals("Operator")) {
                 Connect db = Connect.getConnection();
-                String query = "INSERT INTO Report (userId, pcId, reportNote) VALUES (?, ?, ?)";
+                String query = "INSERT INTO Report (userId, pcId, reportNote, reportDate) VALUES (?, ?, ?, ?)";
                 try (PreparedStatement ps = db.prepareStatement(query)) {
                     ps.setInt(1, userId);
                     ps.setString(2, pcId);
                     ps.setString(3, reportNote);
+                    ps.setString(4, LocalDate.now().toString());
 
                     ps.executeUpdate();
                 }

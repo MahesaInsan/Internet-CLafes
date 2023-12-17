@@ -14,7 +14,7 @@ public class ReportController{
 	
 	public void addNewReport(int userId, String userRole, String pcID, String reportNote)throws SQLException{
 		try {
-			report.addNewReport(userId, userRole, pcID, reportNote);
+			report.addNewReport(userId, pcID, reportNote, userRole);
 			System.out.println("Report added succesfully");
 		}catch(SQLException e) {
 			System.out.println("Error adding a new report : " + e.getMessage());

@@ -71,7 +71,7 @@ public class PCController {
 	}
 
 	//Mengecek apa pc id sudah digunakan atau belum
-	private boolean checkPCID(String pcID) throws SQLException {
+	public boolean checkPCID(String pcID) throws SQLException {
 		if(PC.getPCDetail(pcID) == null) {
 			return false;
 		}else return true;

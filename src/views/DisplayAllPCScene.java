@@ -2,9 +2,11 @@ package views;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import controllers.PCBookController;
 import controllers.PCController;
+import controllers.ReportController;
 import controllers.UserController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -17,6 +19,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -89,10 +92,15 @@ public class DisplayAllPCScene implements IErrorMessage {
 
 		reportColumn.setCellFactory(param -> new TableCell<>() {
 			private final Button reportButton = new Button("Report");
-			
 			{
 				reportButton.setOnAction(event -> {
-					
+					try {
+					PC pc = getTableView().getItems().get(getIndex());
+					showAddReportDialog(primaryStage, pc);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				});
 			}
 			
@@ -185,6 +193,21 @@ public class DisplayAllPCScene implements IErrorMessage {
 		tableView.setPlaceholder(new Label("No Rows to Display"));
 	}
 
+	private void showAddReportDialog(Stage primaryStage, PC pc) throws SQLException {
+      TextInputDialog dialog = new TextInputDialog();
+      dialog.setTitle("Make a Report");
+      dialog.setHeaderText("Enter a Report Note for Us");
+      dialog.setContentText("Report Note:");
+
+      // Traditional way to get the response value.
+      Optional<String> result = dialog.showAndWait();
+      if (result.isPresent()) {
+         String reportNote = result.get();
+         ReportController reportController = new ReportController();	
+		 reportController.addNewReport(UserController.currentUser.getUserID(), UserController.currentUser.getRole(), pc.getPcID(), reportNote);
+      }
+	}
+	
 	// Melakukan inisialisasi add button untuk memindahkan user ke view add pc
 	private void initializeAddButton() {
 		addButton = new Button("Add PC");

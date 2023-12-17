@@ -42,7 +42,7 @@ public class BookingFormScene implements IErrorMessage {
 		errorLabel = new Label();
 		bookingFormLabel = new Label("Booking Form");
 		
-		container.getChildren().add(navbar());
+		container.getChildren().add(navbar(UserController.currentUser));
 		container.getChildren().add(bookingFormLabel);
 		
 		Text text = new Text("\n");
