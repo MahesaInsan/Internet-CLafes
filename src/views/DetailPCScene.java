@@ -114,23 +114,25 @@ public class DetailPCScene implements IErrorMessage{
 		errorMsg.setText(error);
 	}
 	
-		//Inisiasi variable Navbar
-		MenuBar menuBar;
-		Menu adminMenu;
-		Menu custMenu;
-		Menu techMenu;
-		Menu operatorMenu;
-		MenuItem viewAdminPCMI;
-		MenuItem viewCustPCMI;
-		MenuItem viewReportMI;
-		MenuItem viewStaffJobMI;
-		MenuItem viewTransMI;
-		MenuItem viewStaffMI;
-		MenuItem viewTechJobMI;
-		MenuItem viewPCBookedMI;
-		MenuItem viewCustTransMI;
-
-		private MenuBar navbar(User user) {
+//Inisiasi variable Navbar
+	MenuBar menuBar;
+	Menu adminMenu;
+	Menu custMenu;
+	Menu techMenu;
+	Menu operatorMenu;
+	MenuItem viewAdminPCMI;
+	MenuItem viewCustPCMI;
+	MenuItem viewOpPCMI;
+	MenuItem viewReportMI;
+	MenuItem viewStaffJobMI;
+	MenuItem viewTransMI;
+	MenuItem viewStaffMI;
+	MenuItem viewTechJobMI;
+	MenuItem viewPCBookedMI;
+	MenuItem viewCustTransMI;
+	
+	//Membuat navbar dan memberikan label setiap navbar
+	private MenuBar navbar(User user) {
 		menuBar = new MenuBar();
 		
 		adminMenu = new Menu("Main Menu");
@@ -140,6 +142,7 @@ public class DetailPCScene implements IErrorMessage{
 		
 		viewAdminPCMI = new MenuItem("View All PC");
 		viewCustPCMI = new MenuItem("View All PC");
+		viewOpPCMI = new MenuItem("View All PC");
 		viewReportMI = new MenuItem("View All Report");
 		viewStaffJobMI = new MenuItem("View All Staff Job");
 		viewTransMI = new MenuItem("View All Transaction");
@@ -152,7 +155,7 @@ public class DetailPCScene implements IErrorMessage{
 		adminMenu.getItems().addAll(viewAdminPCMI, viewStaffJobMI, viewStaffMI, viewReportMI, viewTransMI);
 		custMenu.getItems().addAll(viewCustPCMI, viewCustTransMI);
 		techMenu.getItems().addAll(viewTechJobMI);
-		operatorMenu.getItems().addAll(viewPCBookedMI);
+		operatorMenu.getItems().addAll(viewOpPCMI, viewPCBookedMI);
 		
 		if(user.getRole().equals("Admin")) {
 			menuBar.getMenus().add(adminMenu);
@@ -181,6 +184,9 @@ public class DetailPCScene implements IErrorMessage{
 		viewCustPCMI.setOnAction((e)->{
 			DisplayAllPCScene.setScene(primaryStage);
 		});
+		viewOpPCMI.setOnAction((e)->{
+			DisplayAllPCScene.setScene(primaryStage);
+		});
 		viewReportMI.setOnAction((e)->{
 			ReportView.setScene(primaryStage);
 		});
@@ -197,10 +203,10 @@ public class DetailPCScene implements IErrorMessage{
 			TechnicianJobView.setScene(primaryStage);
 		});
 		viewPCBookedMI.setOnAction((e)->{
-			
+			ViewAllBookedDataScene.setScene(primaryStage);
 		});
 		viewCustTransMI.setOnAction((e)->{
-			
+			ViewAllTransactionHistory.setScene(primaryStage);
 		});
 	}
 }
