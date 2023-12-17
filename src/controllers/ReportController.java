@@ -12,9 +12,9 @@ public class ReportController{
 		this.report = new Report();
 	}
 	
-	public void addNewReport(String userRole, String pcID, String reportNote)throws SQLException{
+	public void addNewReport(int userId, String userRole, String pcID, String reportNote)throws SQLException{
 		try {
-			report.addNewReport(0, userRole, pcID, reportNote);
+			report.addNewReport(userId, userRole, pcID, reportNote);
 			System.out.println("Report added succesfully");
 		}catch(SQLException e) {
 			System.out.println("Error adding a new report : " + e.getMessage());
