@@ -42,7 +42,7 @@ public class PC {
 	//Menghapus pc dari database
 	public static void deletePC(String pcID) throws SQLException {
 		Connect db = Connect.getConnection();
-		PreparedStatement ps = db.prepareStatement("DELETE FROM `PC` WHERE idD = ?");
+		PreparedStatement ps = db.prepareStatement("DELETE FROM `PC` WHERE id = ?");
 		ps.setString(1, pcID);
 		ps.executeUpdate();
 	}
