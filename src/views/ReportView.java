@@ -92,7 +92,7 @@ public class ReportView {
 		tableView.setPlaceholder(new Label("No Rows to Display"));
 	}
 
-	//Inisiasi variable Navbar
+//Inisiasi variable Navbar
 	MenuBar menuBar;
 	Menu adminMenu;
 	Menu custMenu;
