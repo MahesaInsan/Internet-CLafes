@@ -92,6 +92,11 @@ public class UserController {
 		User user = new User();
 		return user.checkUsername(username);
 	}
+	
+	public User getCurrentUser() {
+		return currentUser;
+	}
+		
 
 	//Melakukan login user dan juga validasi pada input yang dilakukan user
 	public boolean loginUser(IErrorMessage error, String username, String password) throws SQLException {
