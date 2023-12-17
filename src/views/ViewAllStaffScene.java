@@ -6,6 +6,7 @@ import controllers.UserController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -57,7 +58,10 @@ public class ViewAllStaffScene implements IErrorMessage{
 		// Add item to container
 		container = new VBox();
 		container.getChildren().add(navbar(UserController.currentUser));
-		container.getChildren().addAll(tableView, roleDropDownDiv, updateButton);
+		HBox updateDiv = new HBox(20);
+		updateDiv.setPadding(new Insets(10, 10, 10, 10));
+		updateDiv.getChildren().addAll(roleDropDownDiv, updateButton);
+		container.getChildren().addAll(tableView, updateDiv);
 			
 		scene = new Scene(container);
 		
@@ -140,7 +144,7 @@ public class ViewAllStaffScene implements IErrorMessage{
 				"Computer Technician"
 		};
 		
-		roleDropDownDiv = new HBox();
+		roleDropDownDiv = new HBox(5);
 		
 		Label roleDropDownLabel = new Label("User role");
 		roleDropDown = new ComboBox<String>(FXCollections.observableArrayList(role));
