@@ -2,6 +2,8 @@ package views;
 
 import controllers.PCController;
 import controllers.UserController;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -31,6 +33,7 @@ public class DetailPCScene implements IErrorMessage{
 	Stage primaryStage;
 	Scene scene;
 	VBox container;
+	VBox mainDiv;
 	
 	Label pcIDLabel;
 	Label pcConditionLabel;
@@ -43,16 +46,21 @@ public class DetailPCScene implements IErrorMessage{
 		this.pc = pc;
 		container = new VBox();
 		container.getChildren().add(navbar(UserController.currentUser));
+		mainDiv = new VBox(10);
+		mainDiv.setPadding(new Insets(10, 10, 10, 10));
+		mainDiv.getChildren().add(new Label("PC DETAIL"));
 		initializePCID();
 		initializePCCondition();
 		
 		errorMsg = new Label();
-		container.getChildren().add(errorMsg);
+		mainDiv.getChildren().add(errorMsg);
+		container.getChildren().add(mainDiv);
 		
 		if(UserController.getAuthorization().equals("Admin")) initializeButton();
 		
 		scene = new Scene(container);
 		scene.setRoot(container);
+		mainDiv.setAlignment(Pos.CENTER);
 	}
 	
 	//Inisiasi untuk display pc id
@@ -61,7 +69,7 @@ public class DetailPCScene implements IErrorMessage{
 		
 		pcIDLabel = new Label("PC ID: " + pc.getPcID());
 		pcIDDiv.getChildren().addAll(pcIDLabel);
-		container.getChildren().add(pcIDDiv);
+		mainDiv.getChildren().add(pcIDDiv);
 	}
 
 	//inisiasi untuk display pc condition
@@ -70,11 +78,12 @@ public class DetailPCScene implements IErrorMessage{
 		
 		Label pcConditionLabel = new Label("PC Condition: " + pc.getPcCondition());
 		pcConditionDiv.getChildren().add(pcConditionLabel);
-		container.getChildren().add(pcConditionDiv);
+		mainDiv.getChildren().add(pcConditionDiv);
 	}
 
 	//inisiasi button untuk edit dan delete
 	private void initializeButton() {
+		HBox buttonDiv = new HBox(30);
 		editButton = new Button("Edit");
 		editButton.setOnAction(event -> {
 			EditPCScene.setScene(primaryStage, pc);
@@ -88,7 +97,8 @@ public class DetailPCScene implements IErrorMessage{
 			
 			DisplayAllPCScene.setScene(primaryStage);
 		});
-		container.getChildren().addAll(editButton, deleteButton);
+		buttonDiv.getChildren().addAll(editButton, deleteButton);
+		mainDiv.getChildren().addAll(buttonDiv);
 	}
 
 	//inisasi set scene dan melakukan assign primary stage
