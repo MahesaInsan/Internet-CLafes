@@ -4,110 +4,111 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import main.Connect;
 
-public class TransactionHeader {
-	//attribute transaction header
+public class TransactionDetail {
+	//transaction detail attribute
 	private int transactionID;
-	private int staffID;
-	private String staffName;
-	private String transactionDate;
+	private String pcID;
+	private String customerName;
+	private String bookedTime;
+	private static Connect db = Connect.getConnection();
 
-	//constructor transaction header untuk set id, staff id, staff name dan transaction date
-	public TransactionHeader(int id, int staffId, String staffName, String transactionDate) {
+
+	//Constructor transaction detail untuk set id, pc id, customer name dan booked detail
+	public TransactionDetail(int id, String pcId, String customerName, String bookedTime) {
 		this.transactionID = id;
-		this.staffID = staffId;
-		this.staffName = staffName;
-		this.transactionDate = transactionDate;
+		this.pcID = pcId;
+		this.customerName = customerName;
+		this.bookedTime = bookedTime;
 	}
 	
 	//getter id
 	public int getTransactionID() {
 		return transactionID;
 	}
-	
-	//getter staff id
-	public int getStaffID() {
-		return staffID;
+
+	//getter pc id
+	public String getPcID() {
+		return pcID;
 	}
 	
-	//getter staff name
-	public String getStaffName() {
-		return staffName;
+	//getter customer name
+	public String getCustomerName() {
+		return customerName;
 	}
 	
-	//getter transaction date
-	public String getTransactionDate() {
-		return transactionDate;
-	}
-	
-	public static TransactionHeader getTransactionHeader(int id) throws SQLException {
-        TransactionHeader transactionHeader = null;
-		Connect db = Connect.getConnection();
-		String query = "SELECT t.id, t.staffId, u.username, t.transactionDate " +
-                  "FROM TransactionHeader t " +
-                  "INNER JOIN Users u ON t.staffId = u.id " +
-                  "WHERE t.id = ?";
-		
-		PreparedStatement ps = db.prepareStatement(query);
-		ps.setInt(1, id);
-		ResultSet rs = ps.executeQuery();
-		
-		if (rs.next()) {
-			transactionHeader = new TransactionHeader(
-				rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4)
-			);
-		}
-		
-		return transactionHeader;
+	//getter booked time
+	public String getBookedTime() {
+		return bookedTime;
 	}
 
-	
-	public static TransactionHeader getLastTransactionHeader() throws SQLException {
-        TransactionHeader transactionHeader = null;
-        
-		Connect db = Connect.getConnection();
+	public void getUserTransactionDetail(String userID) {
 		
-		String query = "SELECT * FROM `TransactionHeader` ORDER BY id DESC LIMIT 1;";
-		
-		PreparedStatement ps = db.prepareStatement(query);
-		ResultSet rs = ps.executeQuery();
-		
-		if (rs.next()) {
-			transactionHeader = new TransactionHeader(rs.getInt(1), rs.getInt(2), "", rs.getString(3));
-		}
-		
-		return transactionHeader;
 	}
 	
-	//Mengambil semua data transaction header dari database
-	public static ArrayList<TransactionHeader> getAllTransactionHeaderData() throws SQLException {
-		ArrayList<TransactionHeader> tHeadList = new ArrayList<TransactionHeader>();
-		Connect db = Connect.getConnection();
-		PreparedStatement ps = db.prepareStatement("SELECT t.id, t.staffId, u.username, t.transactionDate FROM TransactionHeader t INNER JOIN Users u ON t.staffId = u.id ");
+	
+	//Mengambil semua transaksi detail dari database yang memiliki transaction head yang sama
+	public static ArrayList<TransactionDetail> getAllTransaction(int transactionID) throws SQLException {
+		ArrayList<TransactionDetail> tDetList = new ArrayList<TransactionDetail>();
+		
+		PreparedStatement ps = db.prepareStatement("SELECT t.id, b.pcId, u.username, t.bookedTime FROM TransactionDetail t INNER JOIN Users u ON t.customerId = u.id "
+				+ "INNER JOIN PcBook b ON b.tDetId = t.id WHERE theadId = ?");
+		
+		ps.setInt(1, transactionID);
 		ResultSet rs = ps.executeQuery();
 		
 		while(rs.next()) {
-			tHeadList.add(new TransactionHeader(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4)));
-			System.out.println(rs.getInt(1));
-			System.out.println(rs.getInt(2));
-			System.out.println(rs.getString(3));
-			System.out.println(rs.getString(4));
+			tDetList.add(new TransactionDetail(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
 		}
 		
-		return tHeadList;
+		return tDetList;
 	}
 	
-	public static void addNewTransactionHeader(Integer staffId) throws SQLException {
-		Connect db = Connect.getConnection();
-		String query = "INSERT INTO `TransactionHeader` (staffId, transactionDate) VALUES (?, ?)";
+	public static void createTransactionDetail(int customerId, String bookedTime, int theadId) throws SQLException {
+		System.out.println("CID: " + customerId);
+		System.out.println("time: " + bookedTime);
+		System.out.println("theadid: " + theadId);
+		
+		String query = "INSERT INTO TransactionDetail (customerId, bookedTime, theadId) VALUES (?, ?, ?)";
 		PreparedStatement ps = db.prepareStatement(query);
 		
-		ps.setInt(1, staffId);
-		ps.setString(2, LocalDate.now().toString());
+		ps.setInt(1, customerId);
+		ps.setString(2, bookedTime);
+		ps.setInt(3, theadId);
+
 		ps.executeUpdate();
 	}
+	
+
+	
+	public static TransactionDetail getLastTransactionDetail() throws SQLException {
+        TransactionDetail transactionDetail = null;
+        
+		Connect db = Connect.getConnection();
+		
+		String query = "SELECT * FROM `TransactionDetail` ORDER BY id DESC LIMIT 1;";
+		
+		PreparedStatement ps = db.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		
+		/*
+		 * id customerId bookedTime theadId 
+		 * int id, String pcId, String customerName, Timestamp bookedTime) {
+		 */
+		if (rs.next()) {
+			transactionDetail = new TransactionDetail(rs.getInt(1), "", "", rs.getString(3));
+		}
+		
+		return transactionDetail;
+	}
+	
+	/*
+	 * public void addTransactionDetail(String transactionId, ArrayList<PCBook>
+	 * pcBookList) {
+	 * 
+	 * }
+	 */
 }
