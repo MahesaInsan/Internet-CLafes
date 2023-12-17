@@ -7,6 +7,7 @@ import controllers.UserController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -54,14 +55,22 @@ public class ViewAllJobScene implements IErrorMessage{
 	//Constructor untuk class ini
 	private ViewAllJobScene() {
 		initializeTable();
-		initializeAddButton();
 		initializeDropDown();
 		initializeUpdateButton();
+		initializeAddButton();
 		addEventListener();
 		
 		container = new VBox();
 		container.getChildren().add(navbar(UserController.currentUser));
-		container.getChildren().addAll(tableView, addButton, updateJobDiv, updateButton);
+		
+		HBox editDiv = new HBox(10);
+		editDiv.setPadding(new Insets(10, 10, 10, 10));
+		editDiv.getChildren().addAll(updateJobDiv, updateButton);
+		
+		HBox addDiv = new HBox();
+		addDiv.setPadding(new Insets(10, 10, 10, 10));
+		addDiv.getChildren().addAll(addButton);
+		container.getChildren().addAll(tableView, addDiv, editDiv);
 		
 		scene = new Scene(container);
 		
@@ -114,7 +123,7 @@ public class ViewAllJobScene implements IErrorMessage{
 				"UnComplete"
 		};
 		
-		updateJobDiv = new HBox();
+		updateJobDiv = new HBox(20);
 		
 		jobDropDownLabel = new Label("Job status");
 		jobDropDown = new ComboBox<String>(FXCollections.observableArrayList(status));
