@@ -71,7 +71,7 @@ public class TechnicianJobView implements IErrorMessage {
     private void refreshJobs() {
         jobTableView.getItems().clear();
         try {
-            ArrayList<Job> technicianJobs = jobController.getTechnicianJob(1);
+            ArrayList<Job> technicianJobs = jobController.getTechnicianJob(UserController.currentUser.getUserID());
             if (technicianJobs != null) {
                 for (Job job : technicianJobs) {
                 	jobTableView.getItems().add(job);
