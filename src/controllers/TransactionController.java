@@ -8,9 +8,36 @@ import models.TransactionDetail;
 import models.TransactionHeader;
 
 public class TransactionController {
-	public void addTransaction(String transactionID, ArrayList<PCBook> pcBookList, String staffID) {
+	public Boolean addTransactionDetail(Integer trHeadID, PCBook pcBooked) {
 		
+		try {
+			TransactionDetail.createTransactionDetail(pcBooked.getUserID(), pcBooked.getBookedDate(), trHeadID);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
+	
+	public void addTransactionHeader(Integer staffID) {
+		try {
+			TransactionHeader.addNewTransactionHeader(staffID);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+	}
+	
+	
+	public TransactionHeader getLastTransactionHeader() {
+		try {
+			return TransactionHeader.getLastTransactionHeader();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
 	//Mengambil data transaction header dari model
 	public ArrayList<TransactionHeader> getAllTransactionHeaderData() {
 		try {
