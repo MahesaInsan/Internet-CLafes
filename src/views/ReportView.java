@@ -181,10 +181,10 @@ public class ReportView {
 			TechnicianJobView.setScene(primaryStage);
 		});
 		viewPCBookedMI.setOnAction((e)->{
-			
+			ViewAllBookedDataScene.setScene(primaryStage);
 		});
 		viewCustTransMI.setOnAction((e)->{
-			
+			ViewAllTransactionHistory.setScene(primaryStage);
 		});
 	}
 }
