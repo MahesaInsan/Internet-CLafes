@@ -2,6 +2,8 @@ package views;
 
 import controllers.JobController;
 import controllers.UserController;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +13,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.User;
 
@@ -39,18 +42,21 @@ public class AddStaffJobScene implements IErrorMessage{
 		initializeAddButton();
 		
 		errorMsg = new Label();
-		container = new VBox();
-		container.getChildren().add(navbar(UserController.currentUser));
-		container.getChildren().addAll(staffDiv, errorMsg, pcDiv, addButton);
+		container = new VBox(10);
+		VBox mainDiv = new VBox(10);
+		mainDiv.setPadding(new Insets(10, 10, 10, 10));
+		mainDiv.getChildren().addAll(new Label("ASSIGN JOB"), staffDiv, pcDiv, errorMsg, addButton);
+		container.getChildren().addAll(navbar(UserController.currentUser), mainDiv);
+		
 		
 		scene = new Scene(container);
 		
 		scene.setRoot(container);
-		
+		mainDiv.setAlignment(Pos.CENTER);
 	}
 	
 	private void initializeStaffForm() {
-		staffDiv = new HBox();
+		staffDiv = new HBox(5);
 		
 		staffLabel = new Label("Staff ID");
 		staffInput = new TextField();
@@ -58,7 +64,7 @@ public class AddStaffJobScene implements IErrorMessage{
 	}
 	
 	private void initializePcForm() {
-		pcDiv = new HBox();
+		pcDiv = new HBox(5);
 		
 		pcLabel = new Label("Pc ID");
 		pcInput = new TextField();
@@ -94,97 +100,98 @@ public class AddStaffJobScene implements IErrorMessage{
 	public void displayErrorMessage(String error) {
 		// TODO Auto-generated method stub
 		errorMsg.setText(error);
+		errorMsg.setTextFill(Color.RED);
 	}
 
 	//Inisiasi variable Navbar
-	MenuBar menuBar;
-	Menu adminMenu;
-	Menu custMenu;
-	Menu techMenu;
-	Menu operatorMenu;
-	MenuItem viewAdminPCMI;
-	MenuItem viewCustPCMI;
-	MenuItem viewReportMI;
-	MenuItem viewStaffJobMI;
-	MenuItem viewTransMI;
-	MenuItem viewStaffMI;
-	MenuItem viewTechJobMI;
-	MenuItem viewPCBookedMI;
-	MenuItem viewCustTransMI;
-	
-	//Membuat navbar dan memberikan label setiap navbar
-	public MenuBar navbar(User user) {
-		menuBar = new MenuBar();
+		MenuBar menuBar;
+		Menu adminMenu;
+		Menu custMenu;
+		Menu techMenu;
+		Menu operatorMenu;
+		MenuItem viewAdminPCMI;
+		MenuItem viewCustPCMI;
+		MenuItem viewReportMI;
+		MenuItem viewStaffJobMI;
+		MenuItem viewTransMI;
+		MenuItem viewStaffMI;
+		MenuItem viewTechJobMI;
+		MenuItem viewPCBookedMI;
+		MenuItem viewCustTransMI;
 		
-		adminMenu = new Menu("Main Menu");
-		custMenu = new Menu("Main Menu");
-		techMenu = new Menu("Main Menu");
-		operatorMenu = new Menu("Main Menu");
-		
-		viewAdminPCMI = new MenuItem("View All PC");
-		viewCustPCMI = new MenuItem("View All PC");
-		viewReportMI = new MenuItem("View All Report");
-		viewStaffJobMI = new MenuItem("View All Staff Job");
-		viewTransMI = new MenuItem("View All Transaction");
-		viewStaffMI = new MenuItem("View All Staff");
-		viewTechJobMI = new MenuItem("View All Technician Job");
-		viewPCBookedMI = new MenuItem("View All Booked PC");
-		viewCustTransMI = new MenuItem("View All TransactionHistory");
-		buttonConfig();
-		
-		adminMenu.getItems().addAll(viewAdminPCMI, viewStaffJobMI, viewStaffMI, viewReportMI, viewTransMI);
-		custMenu.getItems().addAll(viewCustPCMI, viewCustTransMI);
-		techMenu.getItems().addAll(viewTechJobMI);
-		operatorMenu.getItems().addAll(viewPCBookedMI);
-		
-		if(user.getRole().equals("Admin")) {
-			menuBar.getMenus().add(adminMenu);
-			return menuBar;
-		}
-		if(user.getRole().equals("Customer")) {
-			menuBar.getMenus().add(custMenu);
-			return menuBar;
-		}
-		if(user.getRole().equals("Computer Technician")) {
-			menuBar.getMenus().add(techMenu);
-			return menuBar;
-		}
-		if(user.getRole().equals("Operator")) {
-			menuBar.getMenus().add(operatorMenu);
-			return menuBar;
-		}
-		return menuBar;
-	}
-	
-	//Menginisiasi functional dari masing-masing submenu untuk melakukan navigasi
-	private void buttonConfig() {
-		viewAdminPCMI.setOnAction((e)->{
-			DisplayAllPCScene.setScene(primaryStage);
-		});
-		viewCustPCMI.setOnAction((e)->{
-			DisplayAllPCScene.setScene(primaryStage);
-		});
-		viewReportMI.setOnAction((e)->{
-			ReportView.setScene(primaryStage);
-		});
-		viewStaffJobMI.setOnAction((e)->{
-			ViewAllJobScene.setScene(primaryStage);
-		});
-		viewTransMI.setOnAction((e)->{
-			ViewAllTransactionScene.setScene(primaryStage);
-		});
-		viewStaffMI.setOnAction((e)->{
-			ViewAllStaffScene.setScene(primaryStage);
-		});
-		viewTechJobMI.setOnAction((e)->{
-			TechnicianJobView.setScene(primaryStage);
-		});
-		viewPCBookedMI.setOnAction((e)->{
+		//Membuat navbar dan memberikan label setiap navbar
+		public MenuBar navbar(User user) {
+			menuBar = new MenuBar();
 			
-		});
-		viewCustTransMI.setOnAction((e)->{
+			adminMenu = new Menu("Main Menu");
+			custMenu = new Menu("Main Menu");
+			techMenu = new Menu("Main Menu");
+			operatorMenu = new Menu("Main Menu");
 			
-		});
-	}
+			viewAdminPCMI = new MenuItem("View All PC");
+			viewCustPCMI = new MenuItem("View All PC");
+			viewReportMI = new MenuItem("View All Report");
+			viewStaffJobMI = new MenuItem("View All Staff Job");
+			viewTransMI = new MenuItem("View All Transaction");
+			viewStaffMI = new MenuItem("View All Staff");
+			viewTechJobMI = new MenuItem("View All Technician Job");
+			viewPCBookedMI = new MenuItem("View All Booked PC");
+			viewCustTransMI = new MenuItem("View All TransactionHistory");
+			buttonConfig();
+			
+			adminMenu.getItems().addAll(viewAdminPCMI, viewStaffJobMI, viewStaffMI, viewReportMI, viewTransMI);
+			custMenu.getItems().addAll(viewCustPCMI, viewCustTransMI);
+			techMenu.getItems().addAll(viewTechJobMI);
+			operatorMenu.getItems().addAll(viewPCBookedMI);
+			
+			if(user.getRole().equals("Admin")) {
+				menuBar.getMenus().add(adminMenu);
+				return menuBar;
+			}
+			if(user.getRole().equals("Customer")) {
+				menuBar.getMenus().add(custMenu);
+				return menuBar;
+			}
+			if(user.getRole().equals("Computer Technician")) {
+				menuBar.getMenus().add(techMenu);
+				return menuBar;
+			}
+			if(user.getRole().equals("Operator")) {
+				menuBar.getMenus().add(operatorMenu);
+				return menuBar;
+			}
+			return menuBar;
+		}
+		
+		//Menginisiasi functional dari masing-masing submenu untuk melakukan navigasi
+		private void buttonConfig() {
+			viewAdminPCMI.setOnAction((e)->{
+				DisplayAllPCScene.setScene(primaryStage);
+			});
+			viewCustPCMI.setOnAction((e)->{
+				DisplayAllPCScene.setScene(primaryStage);
+			});
+			viewReportMI.setOnAction((e)->{
+				ReportView.setScene(primaryStage);
+			});
+			viewStaffJobMI.setOnAction((e)->{
+				ViewAllJobScene.setScene(primaryStage);
+			});
+			viewTransMI.setOnAction((e)->{
+				ViewAllTransactionScene.setScene(primaryStage);
+			});
+			viewStaffMI.setOnAction((e)->{
+				ViewAllStaffScene.setScene(primaryStage);
+			});
+			viewTechJobMI.setOnAction((e)->{
+				TechnicianJobView.setScene(primaryStage);
+			});
+			viewPCBookedMI.setOnAction((e)->{
+				
+			});
+			viewCustTransMI.setOnAction((e)->{
+				
+			});
+		}
 	
 }
