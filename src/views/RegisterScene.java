@@ -3,6 +3,7 @@ package views;
 import java.sql.SQLException;
 
 import controllers.UserController;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -12,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class RegisterScene implements IErrorMessage{
@@ -43,7 +45,8 @@ public class RegisterScene implements IErrorMessage{
 
 	//Constructor untuk memanggil variable dan bagian dari register
 	private RegisterScene() {
-		container = new VBox();
+		container = new VBox(10);
+		container.setPadding(new Insets(10,10,10,10));
 		initializeUsername();
 		initializePassword();
 		initializeConfirmPassword();
@@ -59,8 +62,8 @@ public class RegisterScene implements IErrorMessage{
 
 	//Menampilkan div untuk input username
 	private void initializeUsername() {
-		HBox usernameDiv = new HBox();
-		usernameLabel = new Label("Username");
+		HBox usernameDiv = new HBox(5);
+		usernameLabel = new Label("Username:");
 		usernameInput = new TextField();
 		usernameDiv.getChildren().addAll(usernameLabel, usernameInput);
 		container.getChildren().add(usernameDiv);
@@ -68,8 +71,8 @@ public class RegisterScene implements IErrorMessage{
 
 	//Menampilkan div untuk input password
 	private void initializePassword() {
-		HBox passwordDiv = new HBox();
-		passwordLabel = new Label("Password");
+		HBox passwordDiv = new HBox(5);
+		passwordLabel = new Label("Password:");
 		passwordInput = new PasswordField();
 		passwordDiv.getChildren().addAll(passwordLabel, passwordInput);
 		container.getChildren().add(passwordDiv);
@@ -77,8 +80,8 @@ public class RegisterScene implements IErrorMessage{
 
 	//Menampilkan div untuk input confirm password
 	private void initializeConfirmPassword() {
-		HBox confPassDiv = new HBox();
-		confPassLabel = new Label("Confirm Password");
+		HBox confPassDiv = new HBox(5);
+		confPassLabel = new Label("Confirm Password:");
 		confPassInput = new PasswordField();
 		confPassDiv.getChildren().addAll(confPassLabel, confPassInput);
 		container.getChildren().add(confPassDiv);
@@ -86,8 +89,8 @@ public class RegisterScene implements IErrorMessage{
 
 	//Menampilkan div untuk input umur
 	private void initializeAge() {
-		HBox ageDiv = new HBox();
-		ageLabel = new Label("Age");
+		HBox ageDiv = new HBox(5);
+		ageLabel = new Label("Age :");
 		ageInput = new Spinner<Integer>(1, 100, 1);
 		ageDiv.getChildren().addAll(ageLabel, ageInput);
 		container.getChildren().add(ageDiv);
@@ -133,6 +136,7 @@ public class RegisterScene implements IErrorMessage{
 	public void displayErrorMessage(String error) {
 		// TODO Auto-generated method stub
 		errorLabel.setText(error);
+		errorLabel.setTextFill(Color.RED);
 	}
 	
 }
