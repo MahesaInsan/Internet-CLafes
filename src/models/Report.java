@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Report {
-    private String reportID;
+    private int reportID;
     private String userRole;
     private String pcID;
     private String reportNote;
@@ -37,11 +37,11 @@ public class Report {
         }
     }
 
-    public String getReportID() {
+    public int getReportID() {
 		return reportID;
 	}
 
-	public void setReportID(String reportID) {
+	public void setReportID(int reportID) {
 		this.reportID = reportID;
 	}
 
@@ -81,16 +81,16 @@ public class Report {
         ArrayList<Report> reports = new ArrayList<>();
         try {
             Connect db = Connect.getConnection();
-            String query = "SELECT * FROM report";
+            String query = "SELECT r.id, u.role, r.pcId, r.reportNote, r.reportDate FROM report r INNER JOIN Users u ON r.userId = u.id";
             try (PreparedStatement ps = db.prepareStatement(query);
                  ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Report report = new Report();
-                    report.setReportID(rs.getString("report_id"));
-                    report.setUserRole(rs.getString("user_role"));
-                    report.setPcID(rs.getString("pc_id"));
-                    report.setReportNote(rs.getString("report_note"));
-                    report.setReportDate(rs.getString("report_date"));
+                    report.setReportID(rs.getInt(1));
+                    report.setUserRole(rs.getString(2));
+                    report.setPcID(rs.getString(3));
+                    report.setReportNote(rs.getString(4));
+                    report.setReportDate(rs.getString(5));
 
                     reports.add(report);
                 }
